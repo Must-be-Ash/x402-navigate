@@ -4,6 +4,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 import { Card } from '@/components/ui/card';
+import { preprocessMarkdown } from '@/lib/markdown-preprocessor';
 import 'highlight.js/styles/github-dark.css';
 
 interface MarkdownViewerProps {
@@ -11,6 +12,9 @@ interface MarkdownViewerProps {
 }
 
 export function MarkdownViewer({ content }: MarkdownViewerProps) {
+  // Preprocess GitBook syntax before rendering
+  const processedContent = preprocessMarkdown(content);
+
   return (
     <Card className="p-6 prose prose-slate dark:prose-invert max-w-none">
       <ReactMarkdown
@@ -34,9 +38,18 @@ export function MarkdownViewer({ content }: MarkdownViewerProps) {
               </code>
             );
           },
+          // Style blockquotes (used for hints/callouts)
+          blockquote: ({ node, children, ...props }) => (
+            <blockquote
+              className="border-l-4 border-primary/30 bg-muted/50 rounded-r px-4 py-2 my-4"
+              {...props}
+            >
+              {children}
+            </blockquote>
+          ),
         }}
       >
-        {content}
+        {processedContent}
       </ReactMarkdown>
     </Card>
   );
