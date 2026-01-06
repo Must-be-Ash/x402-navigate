@@ -123,3 +123,57 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  /* Make markdown tables responsive on mobile */
+  .prose table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .prose thead {
+    display: block;
+    width: 100%;
+  }
+
+  .prose tbody {
+    display: block;
+    width: 100%;
+  }
+
+  .prose tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  .prose td,
+  .prose th {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+    white-space: normal;
+    padding: 0.5rem;
+  }
+
+  /* Allow long strings and code to break */
+  .prose code {
+    word-break: break-all;
+    white-space: pre-wrap;
+  }
+
+  /* Mobile specific: make table scrollable if still too wide */
+  @media (max-width: 768px) {
+    .prose table {
+      font-size: 0.875rem;
+    }
+
+    .prose td,
+    .prose th {
+      min-width: 80px;
+      max-width: 200px;
+    }
+  }
+}

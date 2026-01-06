@@ -15,8 +15,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://x402-navigate.vercel.app"),
   title: "x402 Discovery - Navigate and Discover the x402 Protocol",
   description: "An intuitive way to explore x402 documentation, examples, and guides. Find what you need based on your language, framework, and goals.",
+  alternates: {
+    canonical: "/",
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
@@ -42,6 +46,24 @@ export const metadata: Metadata = {
     ],
   },
   manifest: "/site.webmanifest",
+  openGraph: {
+    title: "x402 Discovery - Navigate and Discover the x402 Protocol",
+    description: "An intuitive way to explore x402 documentation, examples, and guides. Find what you need based on your language, framework, and goals.",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "x402 Discovery",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "x402 Discovery - Navigate and Discover the x402 Protocol",
+    description: "An intuitive way to explore x402 documentation, examples, and guides. Find what you need based on your language, framework, and goals.",
+    images: ["/og.png"],
+  },
 };
 
 export default function RootLayout({
