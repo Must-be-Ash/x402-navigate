@@ -6,6 +6,10 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Copy, Check } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
+import { preprocessMarkdown } from '@/lib/markdown-preprocessor';
 
 interface CodeViewerProps {
   files: Array<{
@@ -31,86 +35,122 @@ export function CodeViewer({ files }: CodeViewerProps) {
   // If only one file, don't show tabs
   if (files.length === 1) {
     const file = files[0];
+    const isMarkdown = file.name.toLowerCase().endsWith('.md');
+
     return (
       <Card className="overflow-hidden">
-        <div className="flex items-center justify-between px-4 py-2 bg-muted border-b">
+        <div className="flex items-center justify-between px-4 py-3 border-b">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-mono">{file.name}</span>
-            <Badge variant="outline" className="text-xs">
-              {file.language}
-            </Badge>
+            <span className="text-sm font-mono font-medium">{file.name}</span>
           </div>
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
             onClick={() => handleCopy(file.content, file.name)}
           >
             {copiedFile === file.name ? (
-              <Check className="h-4 w-4" />
+              <>
+                <Check className="h-4 w-4 mr-2" />
+                Copied!
+              </>
             ) : (
-              <Copy className="h-4 w-4" />
+              <>
+                <Copy className="h-4 w-4 mr-2" />
+                Copy
+              </>
             )}
           </Button>
         </div>
         <div className="overflow-x-auto">
-          <pre className="p-4 text-sm">
-            <code>{file.content}</code>
-          </pre>
+          {isMarkdown ? (
+            <div className="p-6 prose prose-slate dark:prose-invert max-w-none">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeHighlight]}
+              >
+                {preprocessMarkdown(file.content)}
+              </ReactMarkdown>
+            </div>
+          ) : (
+            <pre className="p-6 text-sm">
+              <code>{file.content}</code>
+            </pre>
+          )}
         </div>
       </Card>
     );
   }
 
-  // Multiple files - show tabs
+  // Multiple files - show tabs (browser-style)
   return (
     <Tabs defaultValue={files[0].name} className="w-full">
-      <div className="flex items-center justify-between border-b bg-muted">
-        <TabsList className="h-auto p-0 bg-transparent">
+      <div className="bg-muted/30 border-b overflow-x-auto">
+        <TabsList className="h-auto p-0 bg-transparent w-max justify-start gap-1 px-2 pt-2 flex-nowrap">
           {files.map((file) => (
             <TabsTrigger
               key={file.name}
               value={file.name}
-              className="rounded-none data-[state=active]:border-b-2 data-[state=active]:border-primary"
+              className="
+                px-4 py-2 font-mono text-sm whitespace-nowrap
+                rounded-t-lg border border-b-0
+                data-[state=inactive]:bg-muted/50 data-[state=inactive]:text-muted-foreground
+                data-[state=inactive]:border-transparent data-[state=inactive]:hover:bg-muted
+                data-[state=active]:bg-background data-[state=active]:text-foreground
+                data-[state=active]:border-border data-[state=active]:shadow-sm
+                transition-all
+              "
             >
-              <span className="text-sm font-mono">{file.name}</span>
-              <Badge variant="outline" className="ml-2 text-xs">
-                {file.language}
-              </Badge>
+              {file.name}
             </TabsTrigger>
           ))}
         </TabsList>
       </div>
 
-      {files.map((file) => (
-        <TabsContent key={file.name} value={file.name} className="mt-0">
-          <Card className="rounded-t-none border-t-0">
-            <div className="flex items-center justify-end px-4 py-2 border-b bg-muted/50">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => handleCopy(file.content, file.name)}
-              >
-                {copiedFile === file.name ? (
-                  <>
-                    <Check className="h-4 w-4 mr-2" />
-                    Copied!
-                  </>
+      {files.map((file) => {
+        const isMarkdown = file.name.toLowerCase().endsWith('.md');
+
+        return (
+          <TabsContent key={file.name} value={file.name} className="mt-0">
+            <Card className="rounded-t-none">
+              <div className="flex items-center justify-end px-4 py-2 border-b bg-muted/30">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => handleCopy(file.content, file.name)}
+                >
+                  {copiedFile === file.name ? (
+                    <>
+                      <Check className="h-4 w-4 mr-2" />
+                      Copied!
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-4 w-4 mr-2" />
+                      Copy
+                    </>
+                  )}
+                </Button>
+              </div>
+              <div className="overflow-x-auto">
+                {isMarkdown ? (
+                  <div className="p-6 prose prose-slate dark:prose-invert max-w-none">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      rehypePlugins={[rehypeHighlight]}
+                    >
+                      {preprocessMarkdown(file.content)}
+                    </ReactMarkdown>
+                  </div>
                 ) : (
-                  <>
-                    <Copy className="h-4 w-4 mr-2" />
-                    Copy
-                  </>
+                  <pre className="p-6 text-sm">
+                    <code>{file.content}</code>
+                  </pre>
                 )}
-              </Button>
-            </div>
-            <div className="overflow-x-auto">
-              <pre className="p-4 text-sm">
-                <code>{file.content}</code>
-              </pre>
-            </div>
-          </Card>
-        </TabsContent>
-      ))}
+              </div>
+            </Card>
+          </TabsContent>
+        );
+      })}
     </Tabs>
   );
 }

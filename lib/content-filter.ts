@@ -39,16 +39,9 @@ export function filterContent(
       }
     }
 
-    // Filter by complexity - show content at or below selected level:
-    // - beginner: show only beginner
-    // - intermediate: show beginner + intermediate
-    // - advanced: show all levels
+    // Filter by complexity - exact match only
     if (filters.complexity) {
-      const complexityLevels = ['beginner', 'intermediate', 'advanced'];
-      const selectedLevel = complexityLevels.indexOf(filters.complexity);
-      const itemLevel = item.complexity ? complexityLevels.indexOf(item.complexity) : 1; // default to intermediate
-
-      if (itemLevel > selectedLevel) {
+      if (item.complexity !== filters.complexity) {
         return false;
       }
     }
@@ -67,12 +60,19 @@ export function filterContent(
 
     // Filter by search query
     if (filters.search) {
-      const searchLower = filters.search.toLowerCase();
-      const matchesTitle = item.title.toLowerCase().includes(searchLower);
-      const matchesDescription = item.description?.toLowerCase().includes(searchLower);
-      const matchesPath = item.path.toLowerCase().includes(searchLower);
+      // Normalize search: convert to lowercase and replace hyphens/underscores with spaces for flexible matching
+      const normalizeText = (text: string) =>
+        text.toLowerCase().replace(/[-_]/g, ' ');
 
-      if (!matchesTitle && !matchesDescription && !matchesPath) {
+      const searchNormalized = normalizeText(filters.search);
+
+      const matchesTitle = normalizeText(item.title).includes(searchNormalized);
+      const matchesDescription = item.description ? normalizeText(item.description).includes(searchNormalized) : false;
+      const matchesPath = normalizeText(item.path).includes(searchNormalized);
+      const matchesFiles = item.files?.some(file => normalizeText(file).includes(searchNormalized));
+      const matchesFeatures = item.features?.some(feature => normalizeText(feature).includes(searchNormalized));
+
+      if (!matchesTitle && !matchesDescription && !matchesPath && !matchesFiles && !matchesFeatures) {
         return false;
       }
     }

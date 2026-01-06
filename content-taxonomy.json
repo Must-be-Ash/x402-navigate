@@ -42,11 +42,26 @@
         "question": "What programming language do you use?",
         "type": "single",
         "options": [
-          { "id": "typescript", "label": "TypeScript/JavaScript" },
-          { "id": "go", "label": "Go" },
-          { "id": "python", "label": "Python" },
-          { "id": "java", "label": "Java" },
-          { "id": "any", "label": "I'm flexible / just exploring" }
+          {
+            "id": "typescript",
+            "label": "TypeScript/JavaScript"
+          },
+          {
+            "id": "go",
+            "label": "Go"
+          },
+          {
+            "id": "python",
+            "label": "Python"
+          },
+          {
+            "id": "java",
+            "label": "Java"
+          },
+          {
+            "id": "any",
+            "label": "I'm flexible / just exploring"
+          }
         ]
       },
       {
@@ -54,28 +69,88 @@
         "question": "What framework or tech stack are you using?",
         "type": "single",
         "depends_on": {
-          "language": ["typescript", "go", "python"]
+          "language": [
+            "typescript",
+            "go",
+            "python"
+          ]
         },
         "options": {
           "typescript": [
-            { "id": "express", "label": "Express.js", "role": "server" },
-            { "id": "hono", "label": "Hono", "role": "server" },
-            { "id": "nextjs", "label": "Next.js", "role": "server" },
-            { "id": "axios", "label": "Axios", "role": "client" },
-            { "id": "fetch", "label": "Fetch API", "role": "client" },
-            { "id": "custom", "label": "Custom/Other", "role": "both" }
+            {
+              "id": "express",
+              "label": "Express.js",
+              "role": "server"
+            },
+            {
+              "id": "hono",
+              "label": "Hono",
+              "role": "server"
+            },
+            {
+              "id": "nextjs",
+              "label": "Next.js",
+              "role": "server"
+            },
+            {
+              "id": "axios",
+              "label": "Axios",
+              "role": "client"
+            },
+            {
+              "id": "fetch",
+              "label": "Fetch API",
+              "role": "client"
+            },
+            {
+              "id": "custom",
+              "label": "Custom/Other",
+              "role": "both"
+            }
           ],
           "go": [
-            { "id": "gin", "label": "Gin", "role": "server" },
-            { "id": "http", "label": "Standard HTTP", "role": "both" },
-            { "id": "custom", "label": "Custom/Other", "role": "both" }
+            {
+              "id": "gin",
+              "label": "Gin",
+              "role": "server"
+            },
+            {
+              "id": "http",
+              "label": "Standard HTTP",
+              "role": "both"
+            },
+            {
+              "id": "custom",
+              "label": "Custom/Other",
+              "role": "both"
+            }
           ],
           "python": [
-            { "id": "fastapi", "label": "FastAPI", "role": "server" },
-            { "id": "flask", "label": "Flask", "role": "server" },
-            { "id": "httpx", "label": "httpx", "role": "client" },
-            { "id": "requests", "label": "requests", "role": "client" },
-            { "id": "custom", "label": "Custom/Other", "role": "both" }
+            {
+              "id": "fastapi",
+              "label": "FastAPI",
+              "role": "server"
+            },
+            {
+              "id": "flask",
+              "label": "Flask",
+              "role": "server"
+            },
+            {
+              "id": "httpx",
+              "label": "httpx",
+              "role": "client"
+            },
+            {
+              "id": "requests",
+              "label": "requests",
+              "role": "client"
+            },
+            {
+              "id": "custom",
+              "label": "Custom/Other",
+              "role": "both"
+            }
           ]
         }
       },
@@ -142,14 +217,41 @@
     }
   ],
   "tags": {
-    "roles": ["client", "server", "facilitator"],
-    "languages": ["typescript", "go", "python", "java"],
+    "roles": [
+      "client",
+      "server",
+      "facilitator"
+    ],
+    "languages": [
+      "typescript",
+      "go",
+      "python",
+      "java"
+    ],
     "frameworks": {
-      "typescript": ["express", "hono", "nextjs", "axios", "fetch"],
-      "go": ["gin", "http"],
-      "python": ["fastapi", "flask", "httpx", "requests"]
+      "typescript": [
+        "express",
+        "hono",
+        "nextjs",
+        "axios",
+        "fetch"
+      ],
+      "go": [
+        "gin",
+        "http"
+      ],
+      "python": [
+        "fastapi",
+        "flask",
+        "httpx",
+        "requests"
+      ]
     },
-    "complexity": ["beginner", "intermediate", "advanced"],
+    "complexity": [
+      "beginner",
+      "intermediate",
+      "advanced"
+    ],
     "features": [
       "hooks",
       "dynamic-pricing",
@@ -163,8 +265,14 @@
       "session-management",
       "auth"
     ],
-    "networks": ["evm", "svm", "sui"],
-    "payment_schemes": ["exact"]
+    "networks": [
+      "evm",
+      "svm",
+      "sui"
+    ],
+    "payment_schemes": [
+      "exact"
+    ]
   },
   "content_map": [
     {
@@ -197,7 +305,10 @@
       "framework": "fetch",
       "complexity": "beginner",
       "description": "Use x402 with the native Fetch API",
-      "files": ["README.md", "index.ts", "package.json"]
+      "files": [
+        "README.md",
+        "index.ts"
+      ]
     },
     {
       "id": "ts-client-axios",
@@ -209,7 +320,10 @@
       "framework": "axios",
       "complexity": "beginner",
       "description": "Use x402 with Axios HTTP client",
-      "files": ["README.md", "index.ts", "package.json"]
+      "files": [
+        "README.md",
+        "index.ts"
+      ]
     },
     {
       "id": "ts-client-advanced",
@@ -219,9 +333,18 @@
       "role": "client",
       "language": "typescript",
       "complexity": "advanced",
-      "features": ["hooks", "network-preferences"],
+      "features": [
+        "hooks",
+        "network-preferences"
+      ],
       "description": "Lifecycle hooks, network preferences, and custom validation",
-      "files": ["README.md", "index.ts"]
+      "files": [
+        "README.md",
+        "index.ts",
+        "builder-pattern.ts",
+        "hooks.ts",
+        "preferred-network.ts"
+      ]
     },
     {
       "id": "ts-client-custom",
@@ -232,7 +355,10 @@
       "language": "typescript",
       "complexity": "advanced",
       "description": "Manual implementation using only @x402/core",
-      "files": ["README.md", "index.ts"]
+      "files": [
+        "README.md",
+        "index.ts"
+      ]
     },
     {
       "id": "ts-client-mcp",
@@ -241,10 +367,15 @@
       "type": "example",
       "role": "client",
       "language": "typescript",
-      "features": ["mcp"],
+      "features": [
+        "mcp"
+      ],
       "complexity": "intermediate",
       "description": "Build an MCP server that makes paid API requests",
-      "files": ["README.md"]
+      "files": [
+        "README.md",
+        "index.ts"
+      ]
     },
     {
       "id": "ts-server-express",
@@ -256,7 +387,10 @@
       "framework": "express",
       "complexity": "beginner",
       "description": "Protect Express.js routes with x402 middleware",
-      "files": ["README.md", "index.ts", "package.json"]
+      "files": [
+        "README.md",
+        "index.ts"
+      ]
     },
     {
       "id": "ts-server-hono",
@@ -268,7 +402,10 @@
       "framework": "hono",
       "complexity": "beginner",
       "description": "Protect Hono routes with x402 middleware",
-      "files": ["README.md", "index.ts", "package.json"]
+      "files": [
+        "README.md",
+        "index.ts"
+      ]
     },
     {
       "id": "ts-server-advanced",
@@ -278,9 +415,22 @@
       "role": "server",
       "language": "typescript",
       "complexity": "advanced",
-      "features": ["hooks", "dynamic-pricing", "custom-tokens", "bazaar-discovery"],
+      "features": [
+        "hooks",
+        "dynamic-pricing",
+        "custom-tokens",
+        "bazaar-discovery"
+      ],
       "description": "Lifecycle hooks, dynamic pricing, custom tokens, and Bazaar discovery",
-      "files": ["README.md", "index.ts"]
+      "files": [
+        "README.md",
+        "index.ts",
+        "dynamic-pay-to.ts",
+        "dynamic-price.ts",
+        "hooks.ts",
+        "bazaar.ts",
+        "custom-money-definition.ts"
+      ]
     },
     {
       "id": "ts-server-custom",
@@ -291,7 +441,10 @@
       "language": "typescript",
       "complexity": "advanced",
       "description": "Manual implementation using only @x402/core",
-      "files": ["README.md", "index.ts"]
+      "files": [
+        "README.md",
+        "index.ts"
+      ]
     },
     {
       "id": "ts-facilitator",
@@ -302,7 +455,10 @@
       "language": "typescript",
       "complexity": "intermediate",
       "description": "Run your own payment facilitator with /verify and /settle endpoints",
-      "files": ["README.md", "index.ts", "package.json"]
+      "files": [
+        "README.md",
+        "index.ts"
+      ]
     },
     {
       "id": "ts-fullstack-next",
@@ -314,7 +470,11 @@
       "framework": "nextjs",
       "complexity": "intermediate",
       "description": "Full Next.js app with protected routes",
-      "files": ["README.md"]
+      "files": [
+        "README.md",
+        "next.config.ts",
+        "proxy.ts"
+      ]
     },
     {
       "id": "ts-fullstack-miniapp",
@@ -323,10 +483,16 @@
       "type": "example",
       "role": "server",
       "language": "typescript",
-      "features": ["farcaster"],
+      "features": [
+        "farcaster"
+      ],
       "complexity": "intermediate",
       "description": "Farcaster Mini App with x402 payments",
-      "files": ["README.md"]
+      "files": [
+        "README.md",
+        "next.config.ts",
+        "minikit.config.ts"
+      ]
     },
     {
       "id": "go-client-http",
@@ -338,7 +504,13 @@
       "framework": "http",
       "complexity": "beginner",
       "description": "Use x402 with Go's standard HTTP client",
-      "files": ["README.md", "main.go"]
+      "files": [
+        "README.md",
+        "main.go",
+        "builder_pattern.go",
+        "mechanism_helper_registration.go",
+        "utils.go"
+      ]
     },
     {
       "id": "go-client-advanced",
@@ -348,9 +520,20 @@
       "role": "client",
       "language": "go",
       "complexity": "advanced",
-      "features": ["hooks"],
-      "description": "Advanced client patterns with hooks",
-      "files": ["README.md"]
+      "features": [
+        "hooks",
+        "error-recovery",
+        "network-preferences"
+      ],
+      "description": "Advanced client patterns with hooks, error recovery, and multi-network priority",
+      "files": [
+        "README.md",
+        "main.go",
+        "custom_transport.go",
+        "error_recovery.go",
+        "hooks.go",
+        "multi_network_priority.go"
+      ]
     },
     {
       "id": "go-client-custom",
@@ -361,7 +544,10 @@
       "language": "go",
       "complexity": "advanced",
       "description": "Manual client implementation",
-      "files": ["README.md"]
+      "files": [
+        "README.md",
+        "main.go"
+      ]
     },
     {
       "id": "go-server-gin",
@@ -373,7 +559,10 @@
       "framework": "gin",
       "complexity": "beginner",
       "description": "Protect Gin routes with x402 middleware",
-      "files": ["README.md", "main.go"]
+      "files": [
+        "README.md",
+        "main.go"
+      ]
     },
     {
       "id": "go-server-advanced",
@@ -383,9 +572,21 @@
       "role": "server",
       "language": "go",
       "complexity": "advanced",
-      "features": ["hooks", "dynamic-pricing"],
-      "description": "Advanced server patterns",
-      "files": ["README.md"]
+      "features": [
+        "hooks",
+        "dynamic-pricing",
+        "custom-tokens",
+        "bazaar-discovery"
+      ],
+      "description": "Advanced server patterns with hooks, dynamic pricing, custom tokens, and Bazaar discovery",
+      "files": [
+        "README.md",
+        "bazaar.go",
+        "custom-money-definition.go",
+        "dynamic-pay-to.go",
+        "dynamic-price.go",
+        "hooks.go"
+      ]
     },
     {
       "id": "go-server-custom",
@@ -396,7 +597,10 @@
       "language": "go",
       "complexity": "advanced",
       "description": "Manual server implementation",
-      "files": ["README.md"]
+      "files": [
+        "README.md",
+        "main.go"
+      ]
     },
     {
       "id": "go-facilitator",
@@ -407,7 +611,11 @@
       "language": "go",
       "complexity": "intermediate",
       "description": "Run a payment facilitator in Go",
-      "files": ["README.md", "main.go", "signer.go"]
+      "files": [
+        "README.md",
+        "main.go",
+        "signer.go"
+      ]
     },
     {
       "id": "py-legacy-client-httpx",
@@ -419,7 +627,11 @@
       "framework": "httpx",
       "complexity": "beginner",
       "description": "Use x402 with httpx",
-      "files": ["README.md"]
+      "files": [
+        "README.md",
+        "main.py",
+        "extensible.py"
+      ]
     },
     {
       "id": "py-legacy-client-requests",
@@ -431,7 +643,11 @@
       "framework": "requests",
       "complexity": "beginner",
       "description": "Use x402 with requests library",
-      "files": ["README.md"]
+      "files": [
+        "README.md",
+        "main.py",
+        "extensible.py"
+      ]
     },
     {
       "id": "py-legacy-server-fastapi",
@@ -443,7 +659,10 @@
       "framework": "fastapi",
       "complexity": "beginner",
       "description": "Protect FastAPI routes",
-      "files": ["README.md"]
+      "files": [
+        "README.md",
+        "main.py"
+      ]
     },
     {
       "id": "py-legacy-server-flask",
@@ -455,7 +674,10 @@
       "framework": "flask",
       "complexity": "beginner",
       "description": "Protect Flask routes",
-      "files": ["README.md"]
+      "files": [
+        "README.md",
+        "main.py"
+      ]
     },
     {
       "id": "py-legacy-server-advanced",
@@ -466,7 +688,27 @@
       "language": "python",
       "complexity": "advanced",
       "description": "Advanced server patterns in Python",
-      "files": ["README.md"]
+      "files": [
+        "README.md",
+        "main.py"
+      ]
+    },
+    {
+      "id": "py-legacy-server-mainnet",
+      "title": "Python Mainnet Server",
+      "path": "examples/python/legacy/servers/mainnet",
+      "type": "example",
+      "role": "server",
+      "language": "python",
+      "complexity": "intermediate",
+      "features": [
+        "mainnet"
+      ],
+      "description": "Server configured for Base mainnet with real USDC",
+      "files": [
+        "README.md",
+        "main.py"
+      ]
     },
     {
       "id": "py-legacy-fullstack-fastapi",
@@ -478,7 +720,10 @@
       "framework": "fastapi",
       "complexity": "intermediate",
       "description": "Full FastAPI application",
-      "files": ["README.md"]
+      "files": [
+        "README.md",
+        "main.py"
+      ]
     },
     {
       "id": "py-legacy-fullstack-flask",
@@ -490,7 +735,10 @@
       "framework": "flask",
       "complexity": "intermediate",
       "description": "Full Flask application",
-      "files": ["README.md"]
+      "files": [
+        "README.md",
+        "main.py"
+      ]
     },
     {
       "id": "doc-http-402",
@@ -539,7 +787,9 @@
       "type": "concept",
       "description": "Discover x402-enabled services",
       "complexity": "intermediate",
-      "features": ["bazaar-discovery"]
+      "features": [
+        "bazaar-discovery"
+      ]
     },
     {
       "id": "guide-mcp",
@@ -547,7 +797,9 @@
       "path": "docs/guides/mcp-server-with-x402.md",
       "type": "guide",
       "description": "Create Model Context Protocol servers that make payments",
-      "features": ["mcp"],
+      "features": [
+        "mcp"
+      ],
       "complexity": "intermediate"
     },
     {
@@ -580,7 +832,9 @@
       "path": "specs/schemes/exact/scheme_exact_evm.md",
       "type": "spec",
       "description": "Exact payment scheme for EVM chains",
-      "networks": ["evm"],
+      "networks": [
+        "evm"
+      ],
       "complexity": "advanced"
     },
     {
@@ -589,7 +843,9 @@
       "path": "specs/schemes/exact/scheme_exact_svm.md",
       "type": "spec",
       "description": "Exact payment scheme for Solana",
-      "networks": ["svm"],
+      "networks": [
+        "svm"
+      ],
       "complexity": "advanced"
     },
     {
@@ -598,7 +854,9 @@
       "path": "specs/schemes/exact/scheme_exact_sui.md",
       "type": "spec",
       "description": "Exact payment scheme for Sui",
-      "networks": ["sui"],
+      "networks": [
+        "sui"
+      ],
       "complexity": "advanced"
     },
     {
@@ -691,6 +949,685 @@
       "language": "java",
       "description": "Java SDK documentation",
       "complexity": "beginner"
+    },
+    {
+      "id": "ts-legacy-agent",
+      "title": "AI Agent with x402 Proxy",
+      "path": "examples/typescript/legacy/agent",
+      "type": "example",
+      "role": "client",
+      "language": "typescript",
+      "complexity": "intermediate",
+      "features": [
+        "ai-agents"
+      ],
+      "description": "Anthropic AI agent that pays for API access through a Go proxy",
+      "files": [
+        "README.md",
+        "index.ts"
+      ]
+    },
+    {
+      "id": "ts-legacy-dynamic-agent",
+      "title": "Dynamic Agent with Tool Discovery",
+      "path": "examples/typescript/legacy/dynamic_agent",
+      "type": "example",
+      "role": "client",
+      "language": "typescript",
+      "complexity": "advanced",
+      "features": [
+        "ai-agents"
+      ],
+      "description": "AI agent that dynamically discovers and pays for tools without prior knowledge",
+      "files": [
+        "README.md",
+        "agent.ts",
+        "discover_server.ts"
+      ]
+    },
+    {
+      "id": "ts-legacy-mcp",
+      "title": "MCP Server Example (Legacy)",
+      "path": "examples/typescript/legacy/mcp",
+      "type": "example",
+      "role": "client",
+      "language": "typescript",
+      "features": [
+        "mcp"
+      ],
+      "complexity": "intermediate",
+      "description": "Model Context Protocol server for Claude Desktop with x402 payments",
+      "files": [
+        "README.md",
+        "index.ts"
+      ]
+    },
+    {
+      "id": "ts-legacy-mcp-embedded",
+      "title": "MCP with Embedded Wallet",
+      "path": "examples/typescript/legacy/mcp-embedded-wallet",
+      "type": "example",
+      "role": "client",
+      "language": "typescript",
+      "features": [
+        "mcp",
+        "browser-wallet"
+      ],
+      "complexity": "advanced",
+      "description": "Electron-based MCP server with embedded wallet signing via IPC",
+      "files": [
+        "README.md",
+        "index.ts",
+        "electron.ts",
+        "logger.ts",
+        "mcp.ts",
+        "preload.js",
+        "vite.config.ts"
+      ]
+    },
+    {
+      "id": "ts-legacy-facilitator",
+      "title": "Facilitator Implementation (Legacy)",
+      "path": "examples/typescript/legacy/facilitator",
+      "type": "example",
+      "role": "facilitator",
+      "language": "typescript",
+      "complexity": "intermediate",
+      "description": "Legacy facilitator implementation with verify and settle endpoints",
+      "files": [
+        "README.md",
+        "index.ts"
+      ]
+    },
+    {
+      "id": "ts-legacy-client-axios",
+      "title": "Axios Client (Legacy)",
+      "path": "examples/typescript/legacy/clients/axios",
+      "type": "example",
+      "role": "client",
+      "language": "typescript",
+      "framework": "axios",
+      "complexity": "beginner",
+      "description": "Legacy Axios client example",
+      "files": [
+        "README.md",
+        "index.ts",
+        "multi-network-signer.ts"
+      ]
+    },
+    {
+      "id": "ts-legacy-client-fetch",
+      "title": "Fetch Client (Legacy)",
+      "path": "examples/typescript/legacy/clients/fetch",
+      "type": "example",
+      "role": "client",
+      "language": "typescript",
+      "framework": "fetch",
+      "complexity": "beginner",
+      "description": "Legacy Fetch API client example",
+      "files": [
+        "README.md",
+        "index.ts",
+        "multi-network-signer.ts"
+      ]
+    },
+    {
+      "id": "ts-legacy-client-cdp-sdk",
+      "title": "CDP SDK Client Example",
+      "path": "examples/typescript/legacy/clients/cdp-sdk",
+      "type": "example",
+      "role": "client",
+      "language": "typescript",
+      "complexity": "intermediate",
+      "description": "Client using CDP Server Wallets as the signer",
+      "files": [
+        "README.md",
+        "index.ts"
+      ]
+    },
+    {
+      "id": "ts-legacy-client-chainlink-nft",
+      "title": "Chainlink VRF NFT Example",
+      "path": "examples/typescript/legacy/clients/chainlink-vrf-nft",
+      "type": "example",
+      "role": "client",
+      "language": "typescript",
+      "complexity": "advanced",
+      "features": [
+        "chainlink"
+      ],
+      "description": "Mint randomized NFTs using Chainlink VRF with x402 verify/settle flow",
+      "files": [
+        "README.md",
+        "client.ts",
+        "resource.ts"
+      ]
+    },
+    {
+      "id": "ts-legacy-server-express",
+      "title": "Express Server (Legacy)",
+      "path": "examples/typescript/legacy/servers/express",
+      "type": "example",
+      "role": "server",
+      "language": "typescript",
+      "framework": "express",
+      "complexity": "beginner",
+      "description": "Legacy Express.js server example",
+      "files": [
+        "README.md",
+        "index.ts"
+      ]
+    },
+    {
+      "id": "ts-legacy-server-hono",
+      "title": "Hono Server (Legacy)",
+      "path": "examples/typescript/legacy/servers/hono",
+      "type": "example",
+      "role": "server",
+      "language": "typescript",
+      "framework": "hono",
+      "complexity": "beginner",
+      "description": "Legacy Hono server example",
+      "files": [
+        "README.md",
+        "index.ts"
+      ]
+    },
+    {
+      "id": "ts-legacy-server-advanced",
+      "title": "Advanced Server Patterns (Legacy)",
+      "path": "examples/typescript/legacy/servers/advanced",
+      "type": "example",
+      "role": "server",
+      "language": "typescript",
+      "complexity": "advanced",
+      "features": [
+        "hooks",
+        "dynamic-pricing"
+      ],
+      "description": "Legacy advanced server patterns",
+      "files": [
+        "README.md",
+        "index.ts"
+      ]
+    },
+    {
+      "id": "ts-legacy-fullstack-next",
+      "title": "Next.js Fullstack (Legacy)",
+      "path": "examples/typescript/legacy/fullstack/next",
+      "type": "example",
+      "role": "server",
+      "language": "typescript",
+      "framework": "nextjs",
+      "complexity": "intermediate",
+      "description": "Legacy Next.js fullstack application",
+      "files": [
+        "README.md",
+        "middleware.ts",
+        "next.config.ts",
+        "tailwind.config.ts"
+      ]
+    },
+    {
+      "id": "ts-legacy-fullstack-next-advanced",
+      "title": "Next.js Advanced Integration",
+      "path": "examples/typescript/legacy/fullstack/next-advanced",
+      "type": "example",
+      "role": "server",
+      "language": "typescript",
+      "framework": "nextjs",
+      "complexity": "advanced",
+      "features": [
+        "session-management"
+      ],
+      "description": "Deep Next.js integration with paywall and session cookies",
+      "files": [
+        "README.md",
+        "middleware.ts",
+        "tailwind.config.ts"
+      ]
+    },
+    {
+      "id": "ts-legacy-fullstack-browser-wallet",
+      "title": "Browser Wallet Example",
+      "path": "examples/typescript/legacy/fullstack/browser-wallet-example",
+      "type": "example",
+      "role": "server",
+      "language": "typescript",
+      "complexity": "intermediate",
+      "features": [
+        "browser-wallet",
+        "session-management"
+      ],
+      "description": "Hono server + React client with session and one-time payments",
+      "files": [
+        "README.md",
+        "vite.config.ts"
+      ]
+    },
+    {
+      "id": "ts-legacy-fullstack-farcaster",
+      "title": "Farcaster Mini App (Legacy)",
+      "path": "examples/typescript/legacy/fullstack/farcaster-miniapp",
+      "type": "example",
+      "role": "server",
+      "language": "typescript",
+      "features": [
+        "farcaster"
+      ],
+      "complexity": "intermediate",
+      "description": "Farcaster Mini App with x402 protected APIs using MiniKit",
+      "files": [
+        "README.md",
+        "middleware.ts",
+        "tailwind.config.ts"
+      ]
+    },
+    {
+      "id": "ts-legacy-fullstack-auth-pricing",
+      "title": "Auth-Based Pricing Example",
+      "path": "examples/typescript/legacy/fullstack/auth_based_pricing",
+      "type": "example",
+      "role": "server",
+      "language": "typescript",
+      "complexity": "advanced",
+      "features": [
+        "auth",
+        "dynamic-pricing"
+      ],
+      "description": "SIWE + JWT with conditional pricing based on authentication",
+      "files": [
+        "README.md",
+        "backend.ts",
+        "client.ts"
+      ]
+    },
+    {
+      "id": "py-legacy-discovery",
+      "title": "Python Discovery Example",
+      "path": "examples/python/legacy/discovery",
+      "type": "example",
+      "role": "client",
+      "language": "python",
+      "complexity": "intermediate",
+      "features": [
+        "bazaar-discovery"
+      ],
+      "description": "Discover x402 protected resources using Python",
+      "files": [
+        "README.md",
+        "main.py"
+      ]
+    },
+    {
+      "id": "doc-welcome",
+      "title": "Welcome to x402",
+      "path": "docs/README.md",
+      "type": "concept",
+      "description": "Introduction to x402 and overview of the open payment standard",
+      "complexity": "beginner"
+    },
+    {
+      "id": "doc-faq",
+      "title": "Frequently Asked Questions",
+      "path": "docs/faq.md",
+      "type": "reference",
+      "description": "Common questions about x402, facilitators, networks, and troubleshooting",
+      "complexity": "beginner"
+    },
+    {
+      "id": "go-client-guide",
+      "title": "Go Client Implementation Guide",
+      "path": "go/CLIENT.md",
+      "type": "guide",
+      "language": "go",
+      "role": "client",
+      "description": "Comprehensive guide to implementing x402 clients in Go",
+      "complexity": "intermediate"
+    },
+    {
+      "id": "go-server-guide",
+      "title": "Go Server Implementation Guide",
+      "path": "go/SERVER.md",
+      "type": "guide",
+      "language": "go",
+      "role": "server",
+      "description": "Comprehensive guide to implementing x402 servers in Go",
+      "complexity": "intermediate"
+    },
+    {
+      "id": "go-facilitator-guide",
+      "title": "Go Facilitator Implementation Guide",
+      "path": "go/FACILITATOR.md",
+      "type": "guide",
+      "language": "go",
+      "role": "facilitator",
+      "description": "Comprehensive guide to implementing x402 facilitators in Go",
+      "complexity": "advanced"
+    },
+    {
+      "id": "go-extensions",
+      "title": "Go Extensions Overview",
+      "path": "go/extensions/README.md",
+      "type": "reference",
+      "language": "go",
+      "description": "Go SDK extensions and middleware",
+      "complexity": "intermediate"
+    },
+    {
+      "id": "go-mechanisms",
+      "title": "Go Payment Mechanisms",
+      "path": "go/mechanisms/README.md",
+      "type": "reference",
+      "language": "go",
+      "description": "Payment mechanism implementations in Go",
+      "complexity": "intermediate"
+    },
+    {
+      "id": "go-mechanism-evm",
+      "title": "Go EVM Mechanism",
+      "path": "go/mechanisms/evm/README.md",
+      "type": "reference",
+      "language": "go",
+      "networks": [
+        "evm"
+      ],
+      "description": "EVM payment mechanism for Go SDK",
+      "complexity": "advanced"
+    },
+    {
+      "id": "go-mechanism-svm",
+      "title": "Go SVM Mechanism",
+      "path": "go/mechanisms/svm/README.md",
+      "type": "reference",
+      "language": "go",
+      "networks": [
+        "svm"
+      ],
+      "description": "Solana payment mechanism for Go SDK",
+      "complexity": "advanced"
+    },
+    {
+      "id": "go-mechanism-evm-exact",
+      "title": "Go EVM Exact Scheme v1",
+      "path": "go/mechanisms/evm/exact/v1/README.md",
+      "type": "reference",
+      "language": "go",
+      "networks": [
+        "evm"
+      ],
+      "payment_schemes": [
+        "exact"
+      ],
+      "description": "EVM exact payment scheme v1 implementation",
+      "complexity": "advanced"
+    },
+    {
+      "id": "go-mechanism-svm-exact",
+      "title": "Go SVM Exact Scheme v1",
+      "path": "go/mechanisms/svm/exact/v1/README.md",
+      "type": "reference",
+      "language": "go",
+      "networks": [
+        "svm"
+      ],
+      "payment_schemes": [
+        "exact"
+      ],
+      "description": "Solana exact payment scheme v1 implementation",
+      "complexity": "advanced"
+    },
+    {
+      "id": "go-http-gin",
+      "title": "Go Gin Framework Integration",
+      "path": "go/http/gin/README.md",
+      "type": "reference",
+      "language": "go",
+      "framework": "gin",
+      "role": "server",
+      "description": "Gin framework integration guide",
+      "complexity": "intermediate"
+    },
+    {
+      "id": "go-legacy",
+      "title": "Go Legacy SDK",
+      "path": "go/legacy/README.md",
+      "type": "reference",
+      "language": "go",
+      "description": "Legacy Go SDK documentation (v1)",
+      "complexity": "intermediate"
+    },
+    {
+      "id": "py-legacy-examples",
+      "title": "Python Legacy Examples",
+      "path": "examples/python/legacy/README.md",
+      "type": "reference",
+      "language": "python",
+      "description": "Overview of Python legacy examples and usage patterns",
+      "complexity": "beginner"
+    },
+    {
+      "id": "spec-overview",
+      "title": "Specifications Overview",
+      "path": "specs/README.md",
+      "type": "spec",
+      "description": "Overview of x402 technical specifications",
+      "complexity": "intermediate"
+    },
+    {
+      "id": "spec-exact-overview",
+      "title": "Exact Scheme Overview",
+      "path": "specs/schemes/exact/scheme_exact.md",
+      "type": "spec",
+      "payment_schemes": [
+        "exact"
+      ],
+      "description": "General overview of the exact payment scheme",
+      "complexity": "advanced"
+    },
+    {
+      "id": "spec-transport-http-v1",
+      "title": "HTTP Transport v1",
+      "path": "specs/transports-v1/http.md",
+      "type": "spec",
+      "description": "HTTP transport protocol specification v1",
+      "complexity": "advanced"
+    },
+    {
+      "id": "spec-transport-mcp-v1",
+      "title": "MCP Transport v1",
+      "path": "specs/transports-v1/mcp.md",
+      "type": "spec",
+      "features": [
+        "mcp"
+      ],
+      "description": "Model Context Protocol transport specification v1",
+      "complexity": "advanced"
+    },
+    {
+      "id": "spec-transport-a2a-v1",
+      "title": "Agent-to-Agent Transport v1",
+      "path": "specs/transports-v1/a2a.md",
+      "type": "spec",
+      "features": [
+        "ai-agents"
+      ],
+      "description": "Agent-to-Agent communication protocol specification v1",
+      "complexity": "advanced"
+    },
+    {
+      "id": "spec-transport-http-v2",
+      "title": "HTTP Transport v2",
+      "path": "specs/transports-v2/http.md",
+      "type": "spec",
+      "description": "HTTP transport protocol specification v2",
+      "complexity": "advanced"
+    },
+    {
+      "id": "spec-transport-mcp-v2",
+      "title": "MCP Transport v2",
+      "path": "specs/transports-v2/mcp.md",
+      "type": "spec",
+      "features": [
+        "mcp"
+      ],
+      "description": "Model Context Protocol transport specification v2",
+      "complexity": "advanced"
+    },
+    {
+      "id": "spec-transport-a2a-v2",
+      "title": "Agent-to-Agent Transport v2",
+      "path": "specs/transports-v2/a2a.md",
+      "type": "spec",
+      "features": [
+        "ai-agents"
+      ],
+      "description": "Agent-to-Agent communication protocol specification v2",
+      "complexity": "advanced"
+    },
+    {
+      "id": "ts-extensions",
+      "title": "TypeScript Extensions",
+      "path": "typescript/packages/extensions/README.md",
+      "type": "reference",
+      "language": "typescript",
+      "description": "TypeScript SDK extensions and middleware",
+      "complexity": "intermediate"
+    },
+    {
+      "id": "ts-mechanism-evm",
+      "title": "TypeScript EVM Mechanism",
+      "path": "typescript/packages/mechanisms/evm/README.md",
+      "type": "reference",
+      "language": "typescript",
+      "networks": [
+        "evm"
+      ],
+      "description": "EVM payment mechanism for TypeScript SDK",
+      "complexity": "advanced"
+    },
+    {
+      "id": "ts-mechanism-svm",
+      "title": "TypeScript SVM Mechanism",
+      "path": "typescript/packages/mechanisms/svm/README.md",
+      "type": "reference",
+      "language": "typescript",
+      "networks": [
+        "svm"
+      ],
+      "description": "Solana payment mechanism for TypeScript SDK",
+      "complexity": "advanced"
+    },
+    {
+      "id": "pkg-ts-paywall",
+      "title": "@x402/paywall Package",
+      "path": "typescript/packages/http/paywall/README.md",
+      "type": "reference",
+      "language": "typescript",
+      "role": "server",
+      "description": "Paywall utilities for TypeScript HTTP servers",
+      "complexity": "intermediate"
+    },
+    {
+      "id": "pkg-ts-legacy-core",
+      "title": "x402 Legacy Core Package",
+      "path": "typescript/packages/legacy/x402/README.md",
+      "type": "reference",
+      "language": "typescript",
+      "description": "Legacy core TypeScript package (v1)",
+      "complexity": "intermediate"
+    },
+    {
+      "id": "pkg-ts-legacy-paywall",
+      "title": "Legacy Paywall Utilities",
+      "path": "typescript/packages/legacy/x402/src/paywall/README.md",
+      "type": "reference",
+      "language": "typescript",
+      "role": "server",
+      "description": "Legacy paywall utilities (v1)",
+      "complexity": "intermediate"
+    },
+    {
+      "id": "pkg-ts-legacy-axios",
+      "title": "x402-axios Legacy Package",
+      "path": "typescript/packages/legacy/x402-axios/README.md",
+      "type": "reference",
+      "language": "typescript",
+      "framework": "axios",
+      "role": "client",
+      "description": "Legacy Axios integration package (v1)",
+      "complexity": "beginner"
+    },
+    {
+      "id": "pkg-ts-legacy-fetch",
+      "title": "x402-fetch Legacy Package",
+      "path": "typescript/packages/legacy/x402-fetch/README.md",
+      "type": "reference",
+      "language": "typescript",
+      "framework": "fetch",
+      "role": "client",
+      "description": "Legacy Fetch API integration package (v1)",
+      "complexity": "beginner"
+    },
+    {
+      "id": "pkg-ts-legacy-express",
+      "title": "x402-express Legacy Package",
+      "path": "typescript/packages/legacy/x402-express/README.md",
+      "type": "reference",
+      "language": "typescript",
+      "framework": "express",
+      "role": "server",
+      "description": "Legacy Express.js middleware package (v1)",
+      "complexity": "beginner"
+    },
+    {
+      "id": "pkg-ts-legacy-hono",
+      "title": "x402-hono Legacy Package",
+      "path": "typescript/packages/legacy/x402-hono/README.md",
+      "type": "reference",
+      "language": "typescript",
+      "framework": "hono",
+      "role": "server",
+      "description": "Legacy Hono middleware package (v1)",
+      "complexity": "beginner"
+    },
+    {
+      "id": "pkg-ts-legacy-next",
+      "title": "x402-next Legacy Package",
+      "path": "typescript/packages/legacy/x402-next/README.md",
+      "type": "reference",
+      "language": "typescript",
+      "framework": "nextjs",
+      "role": "server",
+      "description": "Legacy Next.js middleware package (v1)",
+      "complexity": "beginner"
+    },
+    {
+      "id": "ts-demo-site",
+      "title": "TypeScript Demo Site",
+      "path": "typescript/site/README.md",
+      "type": "guide",
+      "language": "typescript",
+      "description": "Demo website showcasing x402 integration",
+      "complexity": "intermediate"
+    },
+    {
+      "id": "ts-changelog-v2",
+      "title": "TypeScript v2 Changelog",
+      "path": "typescript/site/CHANGELOG-v2.md",
+      "type": "reference",
+      "language": "typescript",
+      "description": "Version 2 changelog and migration notes",
+      "complexity": "intermediate"
+    },
+    {
+      "id": "go-legacy-bin",
+      "title": "Go Legacy Binary Tools",
+      "path": "go/legacy/bin/README.md",
+      "type": "reference",
+      "language": "go",
+      "description": "Legacy Go binary tools and CLI examples",
+      "complexity": "intermediate"
     }
   ]
 }

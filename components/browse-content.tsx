@@ -64,25 +64,27 @@ export function BrowseContent({ taxonomy, contentItems }: BrowseContentProps) {
           </Card>
         ) : (
           <Tabs defaultValue="all" className="w-full">
-            <TabsList className="mb-6">
-              <TabsTrigger value="all">
-                All ({filteredContent.length})
-              </TabsTrigger>
-              {orderedTypes.map((typeId) => {
-                const count = groupedContent[typeId]?.length || 0;
-                const typeInfo = contentTypes.find((t) => t.id === typeId);
-                if (count === 0 || !typeInfo) return null;
+            <div className="mb-6 overflow-x-auto">
+              <TabsList className="w-max">
+                <TabsTrigger value="all" className="whitespace-nowrap">
+                  All ({filteredContent.length})
+                </TabsTrigger>
+                {orderedTypes.map((typeId) => {
+                  const count = groupedContent[typeId]?.length || 0;
+                  const typeInfo = contentTypes.find((t) => t.id === typeId);
+                  if (count === 0 || !typeInfo) return null;
 
-                const Icon = typeIcons[typeId as keyof typeof typeIcons] || FileText;
+                  const Icon = typeIcons[typeId as keyof typeof typeIcons] || FileText;
 
-                return (
-                  <TabsTrigger key={typeId} value={typeId}>
-                    <Icon className="h-4 w-4 mr-2" />
-                    {typeInfo.name} ({count})
-                  </TabsTrigger>
-                );
-              })}
-            </TabsList>
+                  return (
+                    <TabsTrigger key={typeId} value={typeId} className="whitespace-nowrap">
+                      <Icon className="h-4 w-4 mr-2" />
+                      {typeInfo.name} ({count})
+                    </TabsTrigger>
+                  );
+                })}
+              </TabsList>
+            </div>
 
             <TabsContent value="all" className="mt-0">
               <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

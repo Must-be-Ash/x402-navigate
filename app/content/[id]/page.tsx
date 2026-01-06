@@ -36,7 +36,7 @@ export default async function ContentPage({ params }: PageProps) {
   let codeFiles: Array<{ name: string; content: string; language: string }> = [];
 
   if (isMarkdown) {
-    // Read the markdown file
+    // Read the markdown file (for docs)
     const content = readRepoFile(item.path);
     if (content) {
       markdownContent = content;
@@ -44,7 +44,19 @@ export default async function ContentPage({ params }: PageProps) {
   } else if (isDirectory) {
     // Read all files in the directory
     const files = readDirectoryFiles(item.path, item.files);
-    codeFiles = files.map((f) => ({
+
+    // Sort so README comes first, then alphabetically
+    const sortedFiles = files.sort((a, b) => {
+      const aIsReadme = a.path.toLowerCase().includes('readme');
+      const bIsReadme = b.path.toLowerCase().includes('readme');
+
+      if (aIsReadme && !bIsReadme) return -1;
+      if (!aIsReadme && bIsReadme) return 1;
+      return a.path.localeCompare(b.path);
+    });
+
+    // Include ALL files (including README) in tabs
+    codeFiles = sortedFiles.map((f) => ({
       name: f.path,
       content: f.content,
       language: f.language,
@@ -147,15 +159,17 @@ export default async function ContentPage({ params }: PageProps) {
 
         {/* Content */}
         <div className="space-y-6">
+          {/* Show markdown viewer only for direct .md files (docs), not directories */}
           {isMarkdown && markdownContent && (
             <MarkdownViewer content={markdownContent} />
           )}
 
+          {/* Show code tabs for directories (includes README as first tab) */}
           {isDirectory && codeFiles.length > 0 && (
             <>
               <Card>
                 <CardHeader>
-                  <CardTitle>Code Files</CardTitle>
+                  <CardTitle>Files</CardTitle>
                   <CardDescription>
                     {codeFiles.length} file{codeFiles.length !== 1 ? 's' : ''} in this example
                   </CardDescription>
