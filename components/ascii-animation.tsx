@@ -118,8 +118,8 @@ export function XASCIIAnimation({ onComplete }: { onComplete?: () => void }) {
 
       setCells(newCells);
 
-      // Complete after animation - call immediately for faster transition
-      if (progress >= 0.95 && onCompleteRef.current && !hasCompletedRef.current) {
+      // Complete early - trigger fade-in while animation is still running
+      if (progress >= 0.7 && onCompleteRef.current && !hasCompletedRef.current) {
         hasCompletedRef.current = true;
         onCompleteRef.current?.();
       }
