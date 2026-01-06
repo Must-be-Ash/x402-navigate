@@ -3,8 +3,8 @@ import path from 'path';
 import matter from 'gray-matter';
 import type { TaxonomyData, ContentItem, FileContent } from './types';
 
-// Path to the parent x402 repo
-const X402_REPO_PATH = path.join(process.cwd(), '..');
+// Path to the content directory (copied from x402 repo)
+const X402_REPO_PATH = path.join(process.cwd(), 'content');
 
 /**
  * Load the taxonomy data
