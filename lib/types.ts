@@ -1,6 +1,6 @@
 // Type definitions for the x402 discovery site
 
-export type Role = 'client' | 'server' | 'facilitator';
+export type Role = 'client' | 'server' | 'facilitator' | 'both';
 export type Language = 'typescript' | 'go' | 'python' | 'java' | 'any';
 export type Complexity = 'beginner' | 'intermediate' | 'advanced';
 export type ContentType = 'quickstart' | 'example' | 'guide' | 'reference' | 'concept' | 'spec';

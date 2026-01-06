@@ -51,6 +51,7 @@ export function HomeClient({ taxonomy, contentItems }: HomeClientProps) {
           onComplete={handleOnboardingComplete}
           open={showOnboarding}
           onOpenChange={setShowOnboarding}
+          contentItems={contentItems}
         />
 
         {/* Browse Content */}

@@ -3,19 +3,20 @@
 import { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { ChevronRight, ChevronLeft, Rocket } from 'lucide-react';
-import type { OnboardingAnswers, OnboardingQuestion, OnboardingOption } from '@/lib/types';
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { filterAvailableOptions } from '@/lib/onboarding-filter';
+import type { OnboardingAnswers, OnboardingQuestion, OnboardingOption, ContentItem } from '@/lib/types';
 
 interface OnboardingFlowProps {
   questions: OnboardingQuestion[];
   onComplete: (answers: OnboardingAnswers) => void;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  contentItems: ContentItem[];
 }
 
-export function OnboardingFlow({ questions, onComplete, open, onOpenChange }: OnboardingFlowProps) {
+export function OnboardingFlow({ questions, onComplete, open, onOpenChange, contentItems }: OnboardingFlowProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState<OnboardingAnswers>({});
 
@@ -25,16 +26,36 @@ export function OnboardingFlow({ questions, onComplete, open, onOpenChange }: On
   const getOptions = (): OnboardingOption[] => {
     if (!currentQuestion.options) return [];
 
+    let rawOptions: OnboardingOption[] = [];
+
     if (Array.isArray(currentQuestion.options)) {
-      return currentQuestion.options;
+      rawOptions = currentQuestion.options;
+    } else if (currentQuestion.id === 'framework' && answers.language) {
+      // Handle conditional options based on previous answers
+      rawOptions = currentQuestion.options[answers.language] || [];
+
+      // Filter framework options by their role metadata if user has selected a goal
+      if (answers.goal) {
+        const goalToRole: Record<string, string> = {
+          'accept-payments': 'server',
+          'make-payments': 'client',
+          'run-facilitator': 'facilitator',
+        };
+
+        const userRole = goalToRole[answers.goal];
+        if (userRole) {
+          rawOptions = rawOptions.filter(option => {
+            // Show options that match the user's role or are marked as "both"
+            return !option.role || option.role === 'both' || option.role === userRole;
+          });
+        }
+      }
+    } else {
+      return [];
     }
 
-    // Handle conditional options based on previous answers
-    if (currentQuestion.id === 'framework' && answers.language) {
-      return currentQuestion.options[answers.language] || [];
-    }
-
-    return [];
+    // Filter options to only show those with available content
+    return filterAvailableOptions(currentQuestion.id, rawOptions, answers, contentItems);
   };
 
   const options = getOptions();
@@ -118,80 +139,78 @@ export function OnboardingFlow({ questions, onComplete, open, onOpenChange }: On
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-3xl">
-        <DialogHeader>
-          <div className="flex items-center gap-2 mb-2">
-            <Rocket className="h-5 w-5 text-primary" />
-            <DialogTitle>Welcome to x402 Discovery</DialogTitle>
-          </div>
-          <DialogDescription>
-            Help us personalize your experience. Answer a few questions so we can show you the most relevant content.
-          </DialogDescription>
-        </DialogHeader>
+      <DialogContent className="max-w-2xl">
+        <div className="flex-shrink-0">
+          <DialogHeader className="text-left">
+            <DialogTitle className="text-xl sm:text-2xl">Welcome to x402 Discovery</DialogTitle>
+            <DialogDescription className="text-sm">
+              Help us personalize your experience
+            </DialogDescription>
+          </DialogHeader>
 
-        {/* Progress bar */}
-        <div className="w-full bg-secondary h-2 rounded-full overflow-hidden mb-6">
-          <div
-            className="h-full bg-primary transition-all duration-300"
-            style={{ width: `${progress}%` }}
-          />
+          {/* Progress bar */}
+          <div className="w-full bg-secondary h-1.5 rounded-full overflow-hidden mt-4">
+            <div
+              className="h-full bg-primary transition-all duration-300"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
         </div>
 
-        {/* Question */}
-        <div className="space-y-4">
-          <div>
-            <h3 className="text-lg font-semibold mb-2">{currentQuestion?.question}</h3>
-            <p className="text-sm text-muted-foreground">
-              Step {currentStep + 1} of {questions.length}
-            </p>
-          </div>
+        {/* Scrollable content area */}
+        <div className="flex-1 overflow-y-auto min-h-0 -mx-4 px-4">
+          {/* Question */}
+          <div className="space-y-4 py-2">
+            <div>
+              <h3 className="text-base font-medium sm:text-lg md:text-xl">{currentQuestion?.question}</h3>
+              <p className="text-xs text-muted-foreground mt-1 md:text-sm">
+                Step {currentStep + 1} of {questions.length}
+              </p>
+            </div>
 
-          {/* Options */}
-          <div className="grid gap-3">
-            {options.map((option) => {
-              const isSelected = answers[currentQuestion.id as keyof OnboardingAnswers] === option.id;
+            {/* Options */}
+            <div className="grid gap-2.5">
+              {options.map((option) => {
+                const isSelected = answers[currentQuestion.id as keyof OnboardingAnswers] === option.id;
 
-              return (
-                <Card
-                  key={option.id}
-                  className={`cursor-pointer transition-all hover:border-primary hover:shadow-md ${
-                    isSelected ? 'border-primary ring-2 ring-primary/20' : ''
-                  }`}
-                  onClick={() => handleSelectOption(option.id)}
-                >
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-base flex items-center justify-between">
-                      {option.label}
-                      {option.role && (
-                        <Badge variant="outline" className="ml-2">
-                          {option.role}
-                        </Badge>
+                return (
+                  <Card
+                    key={option.id}
+                    className={`cursor-pointer transition-all hover:border-primary/30 border-border/80 ${isSelected ? 'border-primary/60 ring-1 ring-primary/10 bg-primary/3' : ''
+                      }`}
+                    onClick={() => handleSelectOption(option.id)}
+                  >
+                    <CardHeader className="pb-1 pt-1.5 px-2">
+                      <CardTitle className="text-sm font-normal md:text-base">
+                        {option.label}
+                      </CardTitle>
+                      {option.description && (
+                        <CardDescription className="text-xs mt-0 md:text-sm">
+                          {option.description}
+                        </CardDescription>
                       )}
-                    </CardTitle>
-                    {option.description && (
-                      <CardDescription className="text-sm">
-                        {option.description}
-                      </CardDescription>
-                    )}
-                  </CardHeader>
-                </Card>
-              );
-            })}
+                    </CardHeader>
+                  </Card>
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* Navigation */}
-        <div className="flex items-center justify-between mt-6 pt-4 border-t">
+        {/* Navigation - fixed at bottom */}
+        <div className="flex-shrink-0 flex items-center justify-between pt-4 border-t mt-4">
           <Button
             variant="ghost"
+            size="sm"
             onClick={handleBack}
             disabled={currentStep === 0}
+            className="h-8"
           >
-            <ChevronLeft className="h-4 w-4 mr-1" />
+            <ChevronLeft className="h-3.5 w-3.5 mr-1" />
             Back
           </Button>
 
-          <Button variant="ghost" onClick={handleSkip}>
+          <Button variant="ghost" size="sm" onClick={handleSkip} className="h-8 text-xs">
             Skip for now
           </Button>
         </div>
