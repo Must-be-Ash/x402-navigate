@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/lib/app-context";
+import { CDPProvider } from "@/components/providers/cdp-provider";
 import { Analytics } from "@vercel/analytics/react";
 
 const geistSans = Geist({
@@ -76,9 +77,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AppProvider>
-          {children}
-        </AppProvider>
+        <CDPProvider>
+          <AppProvider>
+            {children}
+          </AppProvider>
+        </CDPProvider>
         <Analytics />
       </body>
     </html>

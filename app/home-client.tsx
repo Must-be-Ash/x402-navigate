@@ -5,6 +5,8 @@ import { OnboardingFlow } from '@/components/onboarding-flow';
 import { BrowseContent } from '@/components/browse-content';
 import { LoadingScreen } from '@/components/loading-screen';
 import type { OnboardingAnswers, TaxonomyData, ContentItem } from '@/lib/types';
+import Link from 'next/link';
+import { MessageSquare } from 'lucide-react';
 
 interface HomeClientProps {
   taxonomy: TaxonomyData;
@@ -33,14 +35,23 @@ export function HomeClient({ taxonomy, contentItems }: HomeClientProps) {
                   Navigate and discover the x402 payment protocol
                 </p>
               </div>
-              <a
-                href="https://github.com/coinbase/x402"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                View on GitHub →
-              </a>
+              <div className="flex items-center gap-4">
+                <Link
+                  href="/chat"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium shadow-sm"
+                >
+                  <MessageSquare className="h-4 w-4" />
+                  Chat Assistant
+                </Link>
+                <a
+                  href="https://github.com/coinbase/x402"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  View on GitHub →
+                </a>
+              </div>
             </div>
           </div>
         </header>
