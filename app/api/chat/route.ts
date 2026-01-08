@@ -5,11 +5,11 @@ import { withX402 } from 'x402-next';
 import { facilitator } from '@coinbase/x402';
 import { NextRequest, NextResponse } from 'next/server';
 
-const PRICE_PER_PROMPT = '$0.01'; // $0.01 per chat message
+const PRICE_PER_PROMPT = '$0.002'; // $0.002 per chat message
 const PAYMENT_ADDRESS = (process.env.NEXT_PUBLIC_RECEIVING_WALLET_ADDRESS || '0xAbF01df9428EaD5418473A7c91244826A3Af23b3') as `0x${string}`;
 
 /**
- * Chat API with x402 payment ($0.01 per prompt)
+ * Chat API with x402 payment ($0.002 per prompt)
  * Uses RAG to answer questions about x402 from the docs
  */
 async function chatHandler(request: NextRequest) {
@@ -80,11 +80,22 @@ The x402 protocol enables programmatic payments over HTTP using the 402 Payment 
 IMPORTANT INSTRUCTIONS:
 - Answer questions based ONLY on the provided context from the official x402 documentation
 - If the context doesn't contain enough information to answer fully, say so and suggest checking the full documentation
-- Provide code examples when relevant (they're in the context)
 - Be concise but helpful - aim for 2-4 paragraphs unless more detail is explicitly requested
-- If asked about implementation details, refer to specific languages/frameworks mentioned in the context
-- Include links to relevant documentation sections when appropriate
 - Never make up information - stick to what's in the documentation
+
+WHEN RESPONDING TO EXAMPLE REQUESTS:
+- **CRITICAL**: When context includes "Full example:" links, you MUST include them in your response
+- Format example links as markdown: [Link text](URL)
+- Example: "Check out the complete [Fetch API Client Example](/content/ts-client-fetch)"
+- Always show inline code snippets from the context AND provide the link to the full example
+- If multiple examples are relevant, list all of them with links
+- Explain what each example demonstrates before showing code snippets
+
+EXAMPLE RESPONSE FORMAT when user asks for code examples:
+1. Brief explanation of what the example does (1-2 sentences)
+2. Key code snippet from the context (2-10 lines showing the most important part)
+3. Link to full example: "View the complete implementation: [Example Name](/content/example-id)"
+4. If relevant, mention related examples with their links
 
 CONTEXT FROM X402 DOCUMENTATION:
 
@@ -137,7 +148,7 @@ export async function GET() {
       message: 'x402 Chat API',
       price: PRICE_PER_PROMPT,
       description: 'Chat with an AI assistant that knows all about x402. Powered by RAG + GPT-4o-mini over the complete x402 documentation.',
-      usage: 'Send POST requests with a messages array. Each message costs $0.01 USDC on Base.',
+      usage: 'Send POST requests with a messages array. Each message costs $0.002 USDC on Base.',
     }),
     {
       status: 200,

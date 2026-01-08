@@ -7,7 +7,7 @@ import { AuthButton } from '@coinbase/cdp-react';
 import { WalletDropdown } from '@/components/WalletDropdown';
 import { useState, useRef, useEffect, FormEvent, ChangeEvent } from 'react';
 import ReactMarkdown from 'react-markdown';
-import { Bot, Send, Wallet, Loader2, User, ArrowLeft } from 'lucide-react';
+import { Bot, Send, Wallet, Loader2, User, ArrowLeft, Github } from 'lucide-react';
 import Link from 'next/link';
 
 // Helper to extract text content from UIMessage parts
@@ -117,9 +117,18 @@ export default function ChatPage() {
               </div>
             </div>
             <div className="flex items-center gap-4">
+              <a
+                href="https://github.com/coinbase/x402/tree/main/x402-discovery-site/app/chat"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-medium text-slate-700 hover:text-slate-900 transition-all border border-slate-300 rounded-lg px-3 py-1.5 hover:border-slate-400 hover:bg-slate-50 shadow-sm"
+              >
+                <Github className="h-4 w-4" />
+                <span>View on GitHub</span>
+              </a>
               <div className="hidden sm:flex items-center gap-2 rounded-lg bg-slate-100 px-3 py-1.5">
                 <Wallet className="h-3.5 w-3.5 text-slate-600" />
-                <span className="text-xs font-medium text-slate-700">$0.01/message</span>
+                <span className="text-xs font-medium text-slate-700">$0.002/message</span>
               </div>
               <WalletDropdown />
               {!isSignedIn && <AuthButton />}
@@ -142,7 +151,7 @@ export default function ChatPage() {
                   Connect Your Wallet
                 </h2>
                 <p className="text-sm leading-relaxed text-slate-600">
-                  Connect your wallet to start chatting with the x402 assistant. Each message costs $0.01 USDC on Base mainnet.
+                  Connect your wallet to start chatting with the x402 assistant. Each message costs $0.002 USDC on Base mainnet.
                 </p>
                 <div className="pt-2">
                   <AuthButton />
@@ -208,8 +217,8 @@ export default function ChatPage() {
 
                   <div className={`max-w-[85%] ${message.role === 'user' ? 'order-first' : ''}`}>
                     <div className={`rounded-2xl px-5 py-4 shadow-sm ${message.role === 'user'
-                        ? 'bg-gradient-to-br from-blue-600 to-blue-700 text-white'
-                        : 'bg-slate-50 text-slate-900 border border-slate-100'
+                      ? 'bg-gradient-to-br from-blue-600 to-blue-700 text-white'
+                      : 'bg-slate-50 text-slate-900 border border-slate-100'
                       }`}>
                       <div className="prose prose-sm max-w-none prose-headings:mt-4 prose-headings:mb-2 prose-p:my-2 prose-p:first:mt-0 prose-p:last:mb-0">
                         <ReactMarkdown
@@ -222,15 +231,15 @@ export default function ChatPage() {
                               const isInline = !className;
                               return isInline ? (
                                 <code className={`px-1.5 py-0.5 rounded font-mono text-xs ${message.role === 'user'
-                                    ? 'bg-blue-700/50 text-blue-50'
-                                    : 'bg-slate-200 text-slate-800'
+                                  ? 'bg-blue-700/50 text-blue-50'
+                                  : 'bg-slate-200 text-slate-800'
                                   }`}>
                                   {children}
                                 </code>
                               ) : (
                                 <code className={`block p-3 rounded-lg font-mono text-xs overflow-x-auto ${message.role === 'user'
-                                    ? 'bg-blue-700/30 text-blue-50'
-                                    : 'bg-slate-200 text-slate-900'
+                                  ? 'bg-blue-700/30 text-blue-50'
+                                  : 'bg-slate-200 text-slate-900'
                                   }`}>
                                   {children}
                                 </code>
@@ -327,11 +336,7 @@ export default function ChatPage() {
             </div>
             <div className="mt-3 flex items-center justify-center gap-2">
               <p className="text-xs text-slate-500">
-                Powered by RAG + GPT-4o-mini
-              </p>
-              <span className="text-xs text-slate-300">•</span>
-              <p className="text-xs text-slate-500">
-                $0.01 USDC per message on Base
+                $0.002 USDC per message
               </p>
             </div>
           </form>

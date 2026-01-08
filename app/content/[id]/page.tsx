@@ -78,16 +78,14 @@ export default async function ContentPage({ params }: PageProps) {
                 Back to Discovery
               </Button>
             </Link>
-
             <a
               href={githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-foreground transition-all border-2 border-border rounded-lg px-3 py-1.5 hover:border-foreground/40 hover:bg-accent shadow-sm"
             >
               <Github className="h-4 w-4" />
-              View on GitHub
-              <ExternalLink className="h-3 w-3" />
+              <span>View on GitHub</span>
             </a>
           </div>
         </div>
