@@ -58,7 +58,7 @@ export async function searchContent(
 
   // Generate embedding for the query
   const { embedding: queryEmbedding } = await embed({
-    model: openai.embedding('text-embedding-3-small'),
+    model: openai.embedding('text-embedding-3-large'),
     value: query,
   });
 
@@ -103,10 +103,20 @@ export async function searchContent(
     similarity: cosineSimilarity(queryEmbedding, chunk.embedding),
   }));
 
-  // Sort by similarity and filter by minimum threshold
-  return results
+  // Sort by similarity first
+  const sortedResults = results.sort((a, b) => b.similarity - a.similarity);
+
+  // Log top 3 matches before filtering (for debugging)
+  if (sortedResults.length > 0) {
+    console.log('[Search] Top 3 matches before threshold filter:');
+    sortedResults.slice(0, 3).forEach((r, i) => {
+      console.log(`  ${i + 1}. ${r.title} (similarity: ${r.similarity.toFixed(4)})`);
+    });
+  }
+
+  // Filter by minimum threshold
+  return sortedResults
     .filter(r => r.similarity >= minSimilarity)
-    .sort((a, b) => b.similarity - a.similarity)
     .slice(0, topK);
 }
 
@@ -207,6 +217,8 @@ export async function getRelevantContext(
       metadata: results[0].metadata,
       similarity: results[0].similarity,
     });
+  } else {
+    console.log('[RAG Search] No results above minSimilarity threshold. Check if threshold is too high.');
   }
 
   // Fallback: If no results with strict filters, try relaxing constraints

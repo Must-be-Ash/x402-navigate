@@ -285,7 +285,7 @@ async function main() {
 
     try {
       const { embeddings } = await embedMany({
-        model: openai.embedding('text-embedding-3-small'),
+        model: openai.embedding('text-embedding-3-large'),
         values: batch.map(chunk => `Title: ${chunk.title}\n\n${chunk.content}`),
       });
 

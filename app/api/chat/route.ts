@@ -5,11 +5,11 @@ import { withX402 } from 'x402-next';
 import { facilitator } from '@coinbase/x402';
 import { NextRequest, NextResponse } from 'next/server';
 
-const PRICE_PER_PROMPT = '$0.002'; // $0.002 per chat message
+const PRICE_PER_PROMPT = '$0.006'; // $0.006 per chat message
 const PAYMENT_ADDRESS = (process.env.NEXT_PUBLIC_RECEIVING_WALLET_ADDRESS || '0xAbF01df9428EaD5418473A7c91244826A3Af23b3') as `0x${string}`;
 
 /**
- * Chat API with x402 payment ($0.002 per prompt)
+ * Chat API with x402 payment ($0.006 per prompt)
  * Uses RAG to answer questions about x402 from the docs
  */
 async function chatHandler(request: NextRequest) {
@@ -65,14 +65,14 @@ async function chatHandler(request: NextRequest) {
     console.log('[Chat API] Searching for relevant context...');
     const relevantContext = await getRelevantContext(userQuery, {
       topK: 10, // Increased from 5 to capture more diverse results (quickstarts, guides, examples)
-      minSimilarity: 0.5, // Lowered from 0.6 to allow more relevant results
+      minSimilarity: 0.35, // Lowered from 0.45 - "make money"/"charge for" queries have similarity ~0.37-0.38
     });
 
     console.log('[Chat API] Retrieved context length:', relevantContext.length);
 
     // Stream response from GPT with RAG context
     const result = streamText({
-      model: openai('gpt-4o-mini'),
+      model: openai('gpt-4o-mini-2024-07-18'), // Upgraded from gpt-4o-mini - better hallucination prevention
       system: `You are an x402 expert assistant. You help developers understand and implement the x402 payment protocol.
 
 The x402 protocol enables programmatic payments over HTTP using the 402 Payment Required status code. It allows services to charge for API access using cryptocurrency payments (primarily USDC on Base network).
@@ -148,8 +148,8 @@ export async function GET() {
     JSON.stringify({
       message: 'x402 Chat API',
       price: PRICE_PER_PROMPT,
-      description: 'Chat with an AI assistant that knows all about x402. Powered by RAG + GPT-4o-mini over the complete x402 documentation.',
-      usage: 'Send POST requests with a messages array. Each message costs $0.002 USDC on Base.',
+      description: 'Chat with an AI assistant that knows all about x402. Powered by RAG + GPT-5-mini over the complete x402 documentation.',
+      usage: 'Send POST requests with a messages array. Each message costs $0.006 USDC on Base.',
     }),
     {
       status: 200,

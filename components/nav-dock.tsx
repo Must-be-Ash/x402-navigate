@@ -72,8 +72,8 @@ export function NavDock({ rightContent, showSignIn = false }: NavDockProps = {})
                         key={item.path}
                         href={item.path}
                         className={`relative z-10 inline-flex items-center justify-center gap-1.5 ${linkClass} rounded-full text-sm font-medium transition-colors duration-200 ${item.isActive
-                            ? 'text-white'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
+                          ? 'text-white'
+                          : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
                           }`}
                       >
                         {item.isActive && (
@@ -96,7 +96,7 @@ export function NavDock({ rightContent, showSignIn = false }: NavDockProps = {})
                   {/* Fourth item: GitHub or Sign In based on showSignIn prop */}
                   {showSignIn ? (
                     isSignedIn ? (
-                      <WalletDropdown 
+                      <WalletDropdown
                         className={`relative z-10 inline-flex items-center justify-center gap-1.5 ${linkClass} rounded-full text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-background/50 transition-all`}
                         iconClassName={iconClass}
                       />
