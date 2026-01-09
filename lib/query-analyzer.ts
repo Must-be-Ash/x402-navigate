@@ -8,6 +8,7 @@
 
 export interface QueryIntent {
   wantsExamples: boolean;
+  wantsQuickstart: boolean; // Specific intent for getting started guides
   role?: 'client' | 'server' | 'facilitator';
   language?: string;
   framework?: string;
@@ -19,6 +20,9 @@ export interface QueryIntent {
  */
 export function analyzeQuery(query: string): QueryIntent {
   const lowerQuery = query.toLowerCase();
+
+  // Detect if user wants quickstart/getting started guide
+  const wantsQuickstart = detectQuickstartIntent(lowerQuery);
 
   // Detect if user wants example code
   const wantsExamples = detectExampleIntent(lowerQuery);
@@ -37,11 +41,37 @@ export function analyzeQuery(query: string): QueryIntent {
 
   return {
     wantsExamples,
+    wantsQuickstart,
     role,
     language,
     framework,
     keywords,
   };
+}
+
+/**
+ * Detect if query is seeking quickstart/getting started guide
+ */
+function detectQuickstartIntent(query: string): boolean {
+  const quickstartIndicators = [
+    // Getting started phrases
+    /\bget(ting)?\s+started/i,
+    /\bquick\s*start/i,
+    /\bstart\s+(using|with|monetizing|building|implementing|accepting)/i,
+    /\bhow\s+(do|can)\s+i\s+start/i,
+    /\bbegin\s+(using|with|implementing)/i,
+
+    // First-time setup phrases
+    /\bfirst\s+time/i,
+    /\bnew\s+to\s+x402/i,
+    /\bintroduc(e|tion)/i,
+
+    // Direct quickstart requests
+    /\bquick\s+guide/i,
+    /\bbasic\s+setup/i,
+  ];
+
+  return quickstartIndicators.some(pattern => pattern.test(query));
 }
 
 /**

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Jersey_25 } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/lib/app-context";
 import { CDPProvider } from "@/components/providers/cdp-provider";
@@ -12,6 +12,12 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const jersey25 = Jersey_25({
+  variable: "--font-jersey-25",
+  weight: "400",
   subsets: ["latin"],
 });
 
@@ -75,7 +81,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${jersey25.variable} antialiased`}
       >
         <CDPProvider>
           <AppProvider>

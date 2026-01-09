@@ -2,7 +2,7 @@
   "metadata": {
     "version": "1.0",
     "description": "Content taxonomy for x402 discovery website",
-    "lastUpdated": "2026-01-06"
+    "lastUpdated": "2026-01-08"
   },
   "onboarding": {
     "questions": [
@@ -1627,6 +1627,77 @@
       "type": "reference",
       "language": "go",
       "description": "Legacy Go binary tools and CLI examples",
+      "complexity": "intermediate"
+    },
+    {
+      "id": "doc-welcome-core",
+      "title": "Welcome to x402",
+      "path": "docs/core-concepts/welcome.md",
+      "type": "concept",
+      "description": "Introduction to the x402 payment protocol",
+      "complexity": "beginner"
+    },
+    {
+      "id": "doc-how-it-works",
+      "title": "How x402 Works",
+      "path": "docs/core-concepts/how-it-works.md",
+      "type": "concept",
+      "description": "Complete payment flow from request to settlement",
+      "complexity": "beginner"
+    },
+    {
+      "id": "doc-network-support",
+      "title": "Networks & Token Support",
+      "path": "docs/core-concepts/network-support.md",
+      "type": "reference",
+      "description": "Supported blockchain networks and tokens",
+      "complexity": "intermediate"
+    },
+    {
+      "id": "guide-miniapps",
+      "title": "Building Miniapps with x402",
+      "path": "docs/guides/miniapps.md",
+      "type": "guide",
+      "description": "Build miniapps with x402 payments using our template",
+      "features": [
+        "ai-agents"
+      ],
+      "complexity": "intermediate"
+    },
+    {
+      "id": "api-facilitator",
+      "title": "x402 Facilitator API",
+      "path": "docs/api-reference/x402-facilitator.md",
+      "type": "reference",
+      "role": "facilitator",
+      "description": "Facilitator API overview and endpoints",
+      "complexity": "advanced"
+    },
+    {
+      "id": "api-verify",
+      "title": "Verify Payment Endpoint",
+      "path": "docs/api-reference/verify-a-payment.md",
+      "type": "reference",
+      "role": "facilitator",
+      "description": "Verify x402 payments with specific schemes and networks",
+      "complexity": "advanced"
+    },
+    {
+      "id": "api-settle",
+      "title": "Settle Payment Endpoint",
+      "path": "docs/api-reference/settle-a-payment.md",
+      "type": "reference",
+      "role": "facilitator",
+      "description": "Settle x402 payments on-chain",
+      "complexity": "advanced"
+    },
+    {
+      "id": "api-supported",
+      "title": "Get Supported Schemes Endpoint",
+      "path": "docs/api-reference/get-supported-payment-schemes-and-networks.md",
+      "type": "reference",
+      "role": "facilitator",
+      "description": "Get supported payment schemes and networks",
       "complexity": "intermediate"
     }
   ]

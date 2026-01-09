@@ -64,8 +64,8 @@ async function chatHandler(request: NextRequest) {
     // Perform RAG search to get relevant content
     console.log('[Chat API] Searching for relevant context...');
     const relevantContext = await getRelevantContext(userQuery, {
-      topK: 5,
-      minSimilarity: 0.6,
+      topK: 10, // Increased from 5 to capture more diverse results (quickstarts, guides, examples)
+      minSimilarity: 0.5, // Lowered from 0.6 to allow more relevant results
     });
 
     console.log('[Chat API] Retrieved context length:', relevantContext.length);
@@ -83,19 +83,20 @@ IMPORTANT INSTRUCTIONS:
 - Be concise but helpful - aim for 2-4 paragraphs unless more detail is explicitly requested
 - Never make up information - stick to what's in the documentation
 
-WHEN RESPONDING TO EXAMPLE REQUESTS:
-- **CRITICAL**: When context includes "Full example:" links, you MUST include them in your response
-- Format example links as markdown: [Link text](URL)
-- Example: "Check out the complete [Fetch API Client Example](/content/ts-client-fetch)"
-- Always show inline code snippets from the context AND provide the link to the full example
-- If multiple examples are relevant, list all of them with links
-- Explain what each example demonstrates before showing code snippets
+WHEN RESPONDING WITH DOCUMENTATION AND EXAMPLES:
+- **CRITICAL**: ONLY include links that are explicitly provided in the context with "Full example:" or "Read more:" prefixes
+- **NEVER** create, guess, or hallucinate link URLs - if a link isn't in the context, don't mention it
+- Format all links as markdown: [Link text](URL)
+- For guides/docs: "For more details, see [Building Miniapps with x402](/content/guide-miniapps)"
+- For examples: "Check out the complete [Fetch API Client Example](/content/ts-client-fetch)"
+- Prioritize quickstart guides for "getting started" or "how do I" questions
+- If you mention a specific resource, ensure the link is actually in the context
 
-EXAMPLE RESPONSE FORMAT when user asks for code examples:
-1. Brief explanation of what the example does (1-2 sentences)
-2. Key code snippet from the context (2-10 lines showing the most important part)
-3. Link to full example: "View the complete implementation: [Example Name](/content/example-id)"
-4. If relevant, mention related examples with their links
+RESPONSE FORMAT:
+1. Direct answer to the question (1-2 paragraphs)
+2. Key information or code snippets from the context
+3. Links to relevant documentation (ONLY if provided in context)
+4. Links to related examples (ONLY if provided in context)
 
 CONTEXT FROM X402 DOCUMENTATION:
 

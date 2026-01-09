@@ -127,15 +127,17 @@ export function buildContextWithLinks(
     if (result.metadata.language) metadata.push(`Language: ${result.metadata.language}`);
     if (result.metadata.type) metadata.push(`Type: ${result.metadata.type}`);
 
-    // Generate content URL if this is an example
+    // Generate content URL for ALL content types (examples, guides, concepts, references, etc.)
     let urlInfo = '';
-    if (result.metadata.type === 'example') {
-      const url = contentUrlMapper.getContentUrl(result.filePath);
-      const title = contentUrlMapper.getTitle(result.filePath) || result.title;
+    const url = contentUrlMapper.getContentUrl(result.filePath);
+    const title = contentUrlMapper.getTitle(result.filePath) || result.title;
 
-      if (url) {
-        urlInfo = `\nFull example: ${title} - ${url}`;
-      }
+    if (url) {
+      // Format link based on content type
+      const linkText = result.metadata.type === 'example'
+        ? `Full example: ${title} - ${url}`
+        : `Read more: ${title} - ${url}`;
+      urlInfo = `\n${linkText}`;
     }
 
     return `
@@ -173,7 +175,14 @@ export async function getRelevantContext(
     type?: string;
   } = { ...options?.filterBy };
 
-  if (intent.wantsExamples) {
+  // Prioritize quickstart guides for getting started queries
+  if (intent.wantsQuickstart) {
+    filter.type = 'quickstart';
+
+    // Apply additional filters if detected
+    if (intent.role) filter.role = intent.role;
+    if (intent.language) filter.language = intent.language;
+  } else if (intent.wantsExamples) {
     // User wants examples - apply type filter
     filter.type = 'example';
 
@@ -201,7 +210,15 @@ export async function getRelevantContext(
   }
 
   // Fallback: If no results with strict filters, try relaxing constraints
-  if (results.length === 0 && intent.wantsExamples) {
+  if (results.length === 0 && intent.wantsQuickstart) {
+    // Keep type=quickstart but remove role/language filters
+    console.log('[RAG Search] No results with strict filters, trying with type=quickstart only');
+    results = await searchContent(query, {
+      ...options,
+      filterBy: { type: 'quickstart' },
+    });
+    console.log('[RAG Search] Found', results.length, 'results with relaxed filter');
+  } else if (results.length === 0 && intent.wantsExamples) {
     // Keep type=example but remove role/language filters
     console.log('[RAG Search] No results with strict filters, trying with type=example only');
     results = await searchContent(query, {
