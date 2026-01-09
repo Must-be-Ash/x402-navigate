@@ -5,11 +5,11 @@ import { withX402 } from 'x402-next';
 import { facilitator } from '@coinbase/x402';
 import { NextRequest, NextResponse } from 'next/server';
 
-const PRICE_PER_PROMPT = '$0.006'; // $0.006 per chat message
+const PRICE_PER_PROMPT = '$0.002'; // $0.002 per chat message
 const PAYMENT_ADDRESS = (process.env.NEXT_PUBLIC_RECEIVING_WALLET_ADDRESS || '0xAbF01df9428EaD5418473A7c91244826A3Af23b3') as `0x${string}`;
 
 /**
- * Chat API with x402 payment ($0.006 per prompt)
+ * Chat API with x402 payment ($0.002 per prompt)
  * Uses RAG to answer questions about x402 from the docs
  */
 async function chatHandler(request: NextRequest) {
@@ -148,8 +148,8 @@ export async function GET() {
     JSON.stringify({
       message: 'x402 Chat API',
       price: PRICE_PER_PROMPT,
-      description: 'Chat with an AI assistant that knows all about x402. Powered by RAG + GPT-5-mini over the complete x402 documentation.',
-      usage: 'Send POST requests with a messages array. Each message costs $0.006 USDC on Base.',
+      description: 'Chat with an AI assistant that knows all about x402. Powered by RAG + GPT-4o-mini over the complete x402 documentation.',
+      usage: 'Send POST requests with a messages array. Each message costs $0.002 USDC on Base.',
     }),
     {
       status: 200,

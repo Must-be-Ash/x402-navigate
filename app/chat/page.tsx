@@ -285,7 +285,7 @@ export default function ChatPage() {
               </div>
               <div className="mt-2 sm:mt-3 flex items-center justify-center gap-2">
                 <p className="text-xs text-slate-500">
-                  $0.006 USDC per message
+                  $0.002 USDC per message
                 </p>
               </div>
             </form>
