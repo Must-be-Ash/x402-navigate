@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { Wallet, Server, Network, ArrowRight, ExternalLink } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { NavDock, MobileNavDock } from '@/components/nav-dock';
+import { NavDock } from '@/components/nav-dock';
 
 interface ProgressData {
   client: number[];
@@ -172,11 +172,7 @@ export default function LearnPage() {
           </div>
         </footer>
 
-        {/* Spacer for mobile nav dock */}
-        <div className="h-20 sm:h-0" />
       </div>
-
-      <MobileNavDock />
     </>
   );
 }

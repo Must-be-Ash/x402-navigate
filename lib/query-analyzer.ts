@@ -69,6 +69,16 @@ function detectQuickstartIntent(query: string): boolean {
     // Direct quickstart requests
     /\bquick\s+guide/i,
     /\bbasic\s+setup/i,
+
+    // API monetization patterns (broad variations)
+    /\bmonetiz(e|ing)\s+(my|an?|the)?\s*(api|service|endpoint|server)/i,
+    /\b(charge|charging)\s+(for|buyers|users|clients)?\s*(my|an?|the)?\s*(api|service|endpoint)/i,
+    /\bmake\s+money\s+(from|with|off)\s+(my|an?|the)?\s*(api|endpoint|service)/i,
+    /\baccept(ing)?\s+(payment|crypto|usdc)\s+(for|on)\s+(my|an?|the)?\s*(api|endpoint)/i,
+    /\bearn\s+(from|with|money)\s+(my|an?|the)?\s*(api|service)/i,
+
+    // Generic API serving + payment verbs
+    /\b(my|an?|the)\s+(api|endpoint|service)\s+.{0,50}(payment|paid|charge|monetiz)/i,
   ];
 
   return quickstartIndicators.some(pattern => pattern.test(query));
@@ -110,9 +120,16 @@ function detectExampleIntent(query: string): boolean {
  * Extract role from query (client, server, facilitator)
  */
 function extractRole(query: string): QueryIntent['role'] {
-  // Client indicators
-  if (/\b(client|buyer|consumer|payer|making?\s+payment|pay(ing)?)/i.test(query)) {
-    return 'client';
+  // Facilitator indicators (check first as it's most specific)
+  if (/\bfacilitator/i.test(query)) {
+    return 'facilitator';
+  }
+
+  // API/service providers are servers (check before generic patterns)
+  // This catches: "monetize my api", "charge for my service", "my endpoint payment", etc.
+  if (/\b(my|an?|the)\s+(api|endpoint|service)\b/i.test(query) &&
+      /\bmonetiz|charg(e|ing)|payment|sell|earn|money/i.test(query)) {
+    return 'server';
   }
 
   // Server indicators
@@ -120,9 +137,14 @@ function extractRole(query: string): QueryIntent['role'] {
     return 'server';
   }
 
-  // Facilitator indicators
-  if (/\bfacilitator/i.test(query)) {
-    return 'facilitator';
+  // Client indicators (check last to avoid "payment" matching in server contexts)
+  if (/\b(client|buyer|consumer|payer|making?\s+payment)\b/i.test(query)) {
+    return 'client';
+  }
+
+  // Explicit paying action (but not in server context)
+  if (/\bpay(ing)?\b/i.test(query) && !/\baccept|receive|collect/i.test(query)) {
+    return 'client';
   }
 
   return undefined;

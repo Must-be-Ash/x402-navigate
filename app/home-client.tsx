@@ -4,7 +4,7 @@ import { useApp, onboardingAnswersToFilters } from '@/lib/app-context';
 import { OnboardingFlow } from '@/components/onboarding-flow';
 import { BrowseContent } from '@/components/browse-content';
 import { LoadingScreen } from '@/components/loading-screen';
-import { NavDock, MobileNavDock } from '@/components/nav-dock';
+import { NavDock } from '@/components/nav-dock';
 import type { OnboardingAnswers, TaxonomyData, ContentItem } from '@/lib/types';
 
 interface HomeClientProps {
@@ -38,13 +38,8 @@ export function HomeClient({ taxonomy, contentItems }: HomeClientProps) {
 
           {/* Browse Content */}
           <BrowseContent taxonomy={taxonomy} contentItems={contentItems} />
-
-          {/* Spacer for mobile nav dock */}
-          <div className="h-20 sm:h-0" />
         </div>
       </LoadingScreen>
-
-      <MobileNavDock />
     </>
   );
 }

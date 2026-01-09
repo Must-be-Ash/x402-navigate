@@ -3,7 +3,7 @@
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
 import { useIsSignedIn, useX402, useCurrentUser } from '@coinbase/cdp-hooks';
-import { ChatNavDock, ChatMobileNavDock } from '@/components/nav-dock';
+import { NavDock } from '@/components/nav-dock';
 import { useState, useRef, useEffect, FormEvent, ChangeEvent } from 'react';
 import ReactMarkdown from 'react-markdown';
 import { Send, Loader2, User } from 'lucide-react';
@@ -92,41 +92,38 @@ export default function ChatPage() {
   return (
     <>
       <div className="min-h-screen bg-slate-50">
-        <ChatNavDock />
+        <NavDock showSignIn={true} />
 
         {/* Main Chat Container */}
-        <main className="mx-auto max-w-5xl px-6 py-8">
-
+        <main className="mx-auto max-w-5xl px-4 sm:px-6 py-3 sm:py-8">
 
           {/* Chat Interface */}
           <div
-            className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl"
-            style={{ height: 'calc(100vh - 240px)', minHeight: '600px' }}
+            className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl h-[calc(100vh-165px)] sm:h-[calc(100vh-160px)]"
           >
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-8">
+            <div className="flex-1 overflow-y-auto p-4 sm:p-8">
               {messages.length === 0 && (
-                <div className="flex h-full flex-col items-center justify-center space-y-8 py-12 text-center">
+                <div className="flex flex-col items-center justify-start sm:justify-center sm:h-full space-y-4 sm:space-y-8 py-4 sm:py-12 text-center">
                   <div className="relative">
                     <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-slate-400 to-slate-600 opacity-20 blur-2xl" />
-                    <div className="relative flex h-24 w-24 items-center justify-center rounded-2xl bg-slate-900 shadow-lg">
+                    <div className="relative flex h-16 w-16 sm:h-24 sm:w-24 items-center justify-center rounded-2xl bg-slate-900 shadow-lg">
                       <img
                         src="/logo-white.svg"
                         alt="x402"
-                        width={48}
-                        height={48}
+                        className="w-8 h-8 sm:w-12 sm:h-12"
                       />
                     </div>
                   </div>
-                  <div className="space-y-3 max-w-xl">
-                    <h2 className="text-3xl font-[family-name:var(--font-jersey-25)] text-slate-900">
+                  <div className="space-y-2 sm:space-y-3 max-w-xl px-2">
+                    <h2 className="text-2xl sm:text-3xl font-[family-name:var(--font-jersey-25)] text-slate-900">
                       Ask me anything about x402
                     </h2>
-                    <p className="text-sm leading-relaxed text-slate-600">
+                    <p className="text-xs sm:text-sm leading-relaxed text-slate-600">
                       I'm powered by RAG over the complete x402 documentation. I can help you understand the protocol, find code examples, and guide you through implementation.
                     </p>
                   </div>
-                  <div className="grid w-full max-w-2xl grid-cols-1 gap-2 sm:grid-cols-2">
+                  <div className="grid w-full max-w-2xl grid-cols-1 gap-2 sm:grid-cols-2 px-2">
                     {[
                       "How do I start monetizing my API with x402? What are the steps involved?",
                       "How does a server verify payment without trusting the client?",
@@ -136,7 +133,7 @@ export default function ChatPage() {
                       <button
                         key={prompt}
                         onClick={() => setInput(prompt)}
-                        className="group text-left rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 transition-all hover:border-blue-300 hover:bg-blue-50 hover:shadow-sm"
+                        className="group text-left rounded-lg border border-slate-200 bg-white px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm text-slate-700 transition-all hover:border-blue-300 hover:bg-blue-50 hover:shadow-sm"
                       >
                         <span className="font-medium">{prompt}</span>
                       </button>
@@ -257,36 +254,36 @@ export default function ChatPage() {
             {/* Input Area */}
             <form
               onSubmit={handleSubmit}
-              className="border-t border-slate-200 bg-white p-5"
+              className="border-t border-slate-200 bg-white p-3 sm:p-5"
             >
-              <div className="flex gap-3">
+              <div className="flex gap-2 sm:gap-3">
                 <input
                   type="text"
                   value={input}
                   onChange={handleInputChange}
                   placeholder={isSignedIn ? "Ask about x402..." : "Connect wallet to chat..."}
                   disabled={!isSignedIn || status !== 'ready'}
-                  className="flex-1 rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-500"
+                  className="flex-1 rounded-xl border border-slate-300 bg-white px-3 py-2.5 sm:px-4 sm:py-3 text-sm text-slate-900 placeholder:text-slate-400 shadow-sm transition-all focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-500"
                 />
                 <button
                   type="submit"
                   disabled={!isSignedIn || status !== 'ready' || !input.trim()}
-                  className="flex items-center gap-2 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 transition-all hover:from-blue-700 hover:to-blue-800 hover:shadow-xl hover:shadow-blue-500/30 disabled:cursor-not-allowed disabled:from-slate-300 disabled:to-slate-400 disabled:shadow-none"
+                  className="flex items-center gap-2 rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 px-4 py-2.5 sm:px-6 sm:py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/25 transition-all hover:from-blue-700 hover:to-blue-800 hover:shadow-xl hover:shadow-blue-500/30 disabled:cursor-not-allowed disabled:from-slate-300 disabled:to-slate-400 disabled:shadow-none"
                 >
                   {status !== 'ready' ? (
                     <>
                       <Loader2 className="h-4 w-4 animate-spin" />
-                      <span>Sending</span>
+                      <span className="hidden sm:inline">Sending</span>
                     </>
                   ) : (
                     <>
                       <Send className="h-4 w-4" />
-                      <span>Send</span>
+                      <span className="hidden sm:inline">Send</span>
                     </>
                   )}
                 </button>
               </div>
-              <div className="mt-3 flex items-center justify-center gap-2">
+              <div className="mt-2 sm:mt-3 flex items-center justify-center gap-2">
                 <p className="text-xs text-slate-500">
                   $0.002 USDC per message
                 </p>
@@ -295,10 +292,7 @@ export default function ChatPage() {
           </div>
         </main>
 
-        {/* Spacer for mobile nav dock */}
-        <div className="h-20 sm:h-0" />
       </div>
-      <ChatMobileNavDock />
     </>
   );
 }

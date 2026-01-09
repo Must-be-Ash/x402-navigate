@@ -6,10 +6,72 @@ import { CodeBlock } from './CodeBlock';
 import { Quiz } from './Quiz';
 import { Playground } from './Playground';
 import { Exercise } from './Exercise';
+import React from 'react';
 
 interface LessonContentProps {
   lesson: Lesson;
   onComplete?: () => void;
+}
+
+// Helper function to parse inline markdown (bold and inline code)
+function parseInlineMarkdown(text: string): React.ReactNode {
+  const parts: React.ReactNode[] = [];
+  let remaining = text;
+  let key = 0;
+
+  while (remaining.length > 0) {
+    // Look for bold text (**text**)
+    const boldMatch = remaining.match(/\*\*(.+?)\*\*/);
+    // Look for inline code (`code`)
+    const codeMatch = remaining.match(/`([^`]+)`/);
+
+    // Find which comes first
+    const boldIndex = boldMatch ? remaining.indexOf(boldMatch[0]) : -1;
+    const codeIndex = codeMatch ? remaining.indexOf(codeMatch[0]) : -1;
+
+    // Determine which match comes first
+    let firstMatch: 'bold' | 'code' | null = null;
+    let firstIndex = -1;
+
+    if (boldIndex !== -1 && (codeIndex === -1 || boldIndex < codeIndex)) {
+      firstMatch = 'bold';
+      firstIndex = boldIndex;
+    } else if (codeIndex !== -1) {
+      firstMatch = 'code';
+      firstIndex = codeIndex;
+    }
+
+    if (firstMatch === null) {
+      // No more matches, add remaining text
+      if (remaining) {
+        parts.push(remaining);
+      }
+      break;
+    }
+
+    // Add text before the match
+    if (firstIndex > 0) {
+      parts.push(remaining.substring(0, firstIndex));
+    }
+
+    if (firstMatch === 'bold' && boldMatch) {
+      parts.push(
+        <strong key={key++} className="font-semibold text-slate-900">
+          {boldMatch[1]}
+        </strong>
+      );
+      remaining = remaining.substring(firstIndex + boldMatch[0].length);
+    } else if (firstMatch === 'code' && codeMatch) {
+      parts.push(
+        <code key={key++} className="px-1.5 py-0.5 rounded bg-slate-100 text-sm font-mono text-slate-800">
+          {codeMatch[1]}
+        </code>
+      );
+      remaining = remaining.substring(firstIndex + codeMatch[0].length);
+    }
+  }
+
+  return parts.length === 1 && typeof parts[0] === 'string' ? parts[0] : parts;
 }
 
 export function LessonContent({ lesson, onComplete }: LessonContentProps) {
@@ -24,7 +86,7 @@ export function LessonContent({ lesson, onComplete }: LessonContentProps) {
           <ul className="my-0 space-y-1.5">
             {lesson.objectives.map((objective, index) => (
               <li key={index} className="text-blue-800">
-                {objective}
+                {parseInlineMarkdown(objective)}
               </li>
             ))}
           </ul>
@@ -67,7 +129,7 @@ export function LessonContent({ lesson, onComplete }: LessonContentProps) {
                     return (
                       <div key={lineIndex} className="flex gap-2 my-2">
                         <span className="font-semibold text-slate-700">{numberedMatch[1]}.</span>
-                        <span className="text-slate-700">{numberedMatch[2]}</span>
+                        <span className="text-slate-700">{parseInlineMarkdown(numberedMatch[2])}</span>
                       </div>
                     );
                   }
@@ -77,7 +139,7 @@ export function LessonContent({ lesson, onComplete }: LessonContentProps) {
                     return (
                       <div key={lineIndex} className="flex gap-2 my-2">
                         <span className="text-slate-700">•</span>
-                        <span className="text-slate-700">{line.substring(2)}</span>
+                        <span className="text-slate-700">{parseInlineMarkdown(line.substring(2))}</span>
                       </div>
                     );
                   }
@@ -85,7 +147,7 @@ export function LessonContent({ lesson, onComplete }: LessonContentProps) {
                   // Regular paragraph
                   return (
                     <p key={lineIndex} className="my-4 text-slate-700 leading-relaxed">
-                      {line}
+                      {parseInlineMarkdown(line)}
                     </p>
                   );
                 })}
@@ -104,7 +166,7 @@ export function LessonContent({ lesson, onComplete }: LessonContentProps) {
           case 'callout':
             return (
               <Callout key={index} variant={section.variant}>
-                {section.content}
+                {parseInlineMarkdown(section.content)}
               </Callout>
             );
 
@@ -114,7 +176,7 @@ export function LessonContent({ lesson, onComplete }: LessonContentProps) {
               <ul key={index} className="my-4 space-y-2">
                 {items.map((item, itemIndex) => (
                   <li key={itemIndex} className="text-slate-700">
-                    {item.replace(/^[-*]\s*/, '')}
+                    {parseInlineMarkdown(item.replace(/^[-*]\s*/, ''))}
                   </li>
                 ))}
               </ul>

@@ -38,7 +38,7 @@ export function FilterBar({ filters, onFiltersChange, onOpenPreferences }: Filte
   const hasActiveFilters = Object.keys(filters).length > 0;
 
   return (
-    <div className="sticky top-0 z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+    <div className="sticky top-[60px] sm:top-[57px] z-10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
       <div className="container mx-auto px-4 py-4">
         {/* Active filters display */}
         {hasActiveFilters && (

@@ -10,7 +10,12 @@ import { base } from 'viem/chains';
 const USDC_ADDRESS = '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913';
 const USDC_DECIMALS = 6;
 
-export function WalletDropdown() {
+interface WalletDropdownProps {
+  className?: string;
+  iconClassName?: string;
+}
+
+export function WalletDropdown({ className, iconClassName }: WalletDropdownProps = {}) {
   const { isSignedIn } = useIsSignedIn();
   const { currentUser } = useCurrentUser();
   const { signOut } = useSignOut();
@@ -119,18 +124,29 @@ export function WalletDropdown() {
     return null;
   }
 
+  // Use custom className if provided (for nav dock integration)
+  const buttonClassName = className || "inline-flex items-center gap-2 px-4 py-2 bg-white text-slate-900 text-sm font-medium rounded-xl hover:bg-slate-50 transition-all shadow-sm shadow-black/5 border border-slate-200";
+  const walletIconClassName = iconClassName || "h-4 w-4";
+
   return (
     <div className="relative" ref={dropdownRef}>
       {/* Wallet Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="inline-flex items-center gap-2 px-4 py-2 bg-white text-slate-900 text-sm font-medium rounded-xl hover:bg-slate-50 transition-all shadow-sm shadow-black/5 border border-slate-200"
+        className={buttonClassName}
       >
-        <Wallet className="h-4 w-4" />
-        <span className="font-mono text-xs">
-          {balance !== null ? `$${balance.toFixed(2)}` : '...'}
-        </span>
-        <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        <Wallet className={`${walletIconClassName} transition-all duration-200`} />
+        {/* Only show balance label when using default styling */}
+        {!className && (
+          <>
+            <span className="font-mono text-xs">
+              {balance !== null ? `$${balance.toFixed(2)}` : '...'}
+            </span>
+            <ChevronDown className={`h-4 w-4 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+          </>
+        )}
+        {/* Show "Wallet" label when using nav dock styling */}
+        {className && <span className="hidden sm:inline">Wallet</span>}
       </button>
 
       {/* Dropdown Menu */}
